@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/fonts/montserrat_eb_14.tres" type="DynamicFont" id=1]
+[ext_resource path="res://addons/SafeArea/SafeArea.gd" type="Script" id=2]
+[ext_resource path="res://menu/main/ui/ui.gd" type="Script" id=3]
+
+[node name="ui" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 3 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="MarginContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+margin_right = 600.0
+margin_bottom = 1024.0
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 860.0
+margin_right = 600.0
+margin_bottom = 940.0
+alignment = 1
+
+[node name="play" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+margin_left = 138.0
+margin_right = 288.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 150, 80 )
+custom_fonts/font = ExtResource( 1 )
+text = "Play"
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+margin_left = 292.0
+margin_right = 307.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 15, 0 )
+
+[node name="editor" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+margin_left = 311.0
+margin_right = 461.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 150, 80 )
+custom_fonts/font = ExtResource( 1 )
+text = "Editor"
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 944.0
+margin_right = 600.0
+margin_bottom = 1024.0
+rect_min_size = Vector2( 0, 80 )
+
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer/editor" to="." method="_on_editor_pressed"]
