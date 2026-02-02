@@ -1,6 +1,8 @@
 extends Node
 class_name RadioChatters
 
+signal on_radio_played(text)
+
 const COMMAND_ACKNOWLEDGEMENT = 1
 const AMBUSH_INITIATED = 2
 const LOW_AMMO = 3
@@ -13,123 +15,144 @@ const RETREAT = 9
 
 onready var US_RADIO = {
 	COMMAND_ACKNOWLEDGEMENT:{
-		"Roger.":"path/to/audio.ogg",
-		"Copy that.":"path/to/audio.ogg",
-		"Wilco.":"path/to/audio.ogg",
-		"Moving now.":"path/to/audio.ogg",
-		"On the way.":"path/to/audio.ogg",
-		"Orders received.":"path/to/audio.ogg",
+		"Roger.":preload("res://assets/sounds/radio_chatter/us/COMMAND_ACKNOWLEDGEMENT/1.wav"),
+		"Copy that.":preload("res://assets/sounds/radio_chatter/us/COMMAND_ACKNOWLEDGEMENT/2.wav"),
+		"Wilco.":preload("res://assets/sounds/radio_chatter/us/COMMAND_ACKNOWLEDGEMENT/3.wav"),
+		"Moving now.":preload("res://assets/sounds/radio_chatter/us/COMMAND_ACKNOWLEDGEMENT/4.wav"),
+		"On the way.":preload("res://assets/sounds/radio_chatter/us/COMMAND_ACKNOWLEDGEMENT/5.wav"),
+		"Orders received.":preload("res://assets/sounds/radio_chatter/us/COMMAND_ACKNOWLEDGEMENT/6.wav"),
 	},
 	AMBUSH_INITIATED:{
-		"Targets in sight.":"path/to/audio.ogg",
-		"Hold… hold…":"path/to/audio.ogg",
-		"Spring the ambush!":"path/to/audio.ogg",
-		"Engaging now!":"path/to/audio.ogg",
+		"Targets in sight.":preload("res://assets/sounds/radio_chatter/us/AMBUSH_INITIATED/1.wav"),
+		"Hold… hold…":preload("res://assets/sounds/radio_chatter/us/AMBUSH_INITIATED/2.wav"),
+		"Spring the ambush!":preload("res://assets/sounds/radio_chatter/us/AMBUSH_INITIATED/3.wav"),
+		"Engaging now!":preload("res://assets/sounds/radio_chatter/us/AMBUSH_INITIATED/4.wav"),
 	},
 	LOW_AMMO:{
-		"Low on ammo!":"path/to/audio.ogg",
-		"Running dry!":"path/to/audio.ogg",
-		"We’re out!":"path/to/audio.ogg",
-		"Need resupply!":"path/to/audio.ogg",
+		"Low on ammo!":preload("res://assets/sounds/radio_chatter/us/LOW_AMMO/1.wav"),
+		"Running dry!":preload("res://assets/sounds/radio_chatter/us/LOW_AMMO/2.wav"),
+		"We’re out!":preload("res://assets/sounds/radio_chatter/us/LOW_AMMO/3.wav"),
+		"Need resupply!":preload("res://assets/sounds/radio_chatter/us/LOW_AMMO/4.wav"),
 	},
 	AREA_CLEAR:{
-		"Area secure.":"path/to/audio.ogg",
-		"Targets down.":"path/to/audio.ogg",
-		"Clear.":"path/to/audio.ogg",
-		"We’re good here.":"path/to/audio.ogg",
+		"Area secure.":preload("res://assets/sounds/radio_chatter/us/AREA_CLEAR/1.wav"),
+		"Targets down.":preload("res://assets/sounds/radio_chatter/us/AREA_CLEAR/2.wav"),
+		"Clear.":preload("res://assets/sounds/radio_chatter/us/AREA_CLEAR/3.wav"),
+		"We’re good here.":preload("res://assets/sounds/radio_chatter/us/AREA_CLEAR/4.wav"),
 	},
 	CASUALTY:{
-		"Man down!":"path/to/audio.ogg",
-		"We’ve got wounded!":"path/to/audio.ogg",
-		"Need a medic!":"path/to/audio.ogg",
-		"Taking losses!":"path/to/audio.ogg",
+		"Man down!":preload("res://assets/sounds/radio_chatter/us/CASUALTY/1.wav"),
+		"We’ve got wounded!":preload("res://assets/sounds/radio_chatter/us/CASUALTY/2.wav"),
+		"Need a medic!":preload("res://assets/sounds/radio_chatter/us/CASUALTY/3.wav"),
+		"Taking losses!":preload("res://assets/sounds/radio_chatter/us/CASUALTY/4.wav"),
 	},
 	COMBAT_STATUS:{
-		"Engaging.":"path/to/audio.ogg",
-		"Suppressing!":"path/to/audio.ogg",
-		"Reloading!":"path/to/audio.ogg",
-		"We’re pinned!":"path/to/audio.ogg",
-		"Pushing forward!":"path/to/audio.ogg",
+		"Engaging.":preload("res://assets/sounds/radio_chatter/us/COMBAT_STATUS/1.wav"),
+		"Suppressing!":preload("res://assets/sounds/radio_chatter/us/COMBAT_STATUS/2.wav"),
+		"Reloading!":preload("res://assets/sounds/radio_chatter/us/COMBAT_STATUS/3.wav"),
+		"We’re pinned!":preload("res://assets/sounds/radio_chatter/us/COMBAT_STATUS/4.wav"),
+		"Pushing forward!":preload("res://assets/sounds/radio_chatter/us/COMBAT_STATUS/5.wav"),
 	},
 	ENEMY_SPOTTED:{
-		"Contact!":"path/to/audio.ogg",
-		"Enemy spotted.":"path/to/audio.ogg",
-		"Eyes on target.":"path/to/audio.ogg",
-		"Taking fire!":"path/to/audio.ogg",
-		"Heavy contact!":"path/to/audio.ogg",
+		"Contact!":preload("res://assets/sounds/radio_chatter/us/ENEMY_SPOTTED/1.wav"),
+		"Enemy spotted.":preload("res://assets/sounds/radio_chatter/us/ENEMY_SPOTTED/2.wav"),
+		"Eyes on target.":preload("res://assets/sounds/radio_chatter/us/ENEMY_SPOTTED/3.wav"),
+		"Heavy contact!":preload("res://assets/sounds/radio_chatter/us/ENEMY_SPOTTED/4.wav"),
+		"Taking fire!":preload("res://assets/sounds/radio_chatter/us/ENEMY_SPOTTED/5.wav"),
 	},
 	MOVEMENT:{
-		"We’re moving.":"path/to/audio.ogg",
-		"Crossing now.":"path/to/audio.ogg",
-		"Entering the area.":"path/to/audio.ogg",
-		"Reached position.":"path/to/audio.ogg",
-		"Holding here.":"path/to/audio.ogg",
+		"We’re moving.":preload("res://assets/sounds/radio_chatter/us/MOVEMENT/1.wav"),
+		"Crossing now.":preload("res://assets/sounds/radio_chatter/us/MOVEMENT/2.wav"),
+		"Entering the area.":preload("res://assets/sounds/radio_chatter/us/MOVEMENT/3.wav"),
+		"Reached position.":preload("res://assets/sounds/radio_chatter/us/MOVEMENT/4.wav"),
+		"Holding here.":preload("res://assets/sounds/radio_chatter/us/MOVEMENT/5.wav"),
 	},
 	RETREAT:{
-		"Pull back!":"path/to/audio.ogg",
-		"Break contact!":"path/to/audio.ogg",
-		"Fall back!":"path/to/audio.ogg",
-		"Disengaging!":"path/to/audio.ogg",
+		"Pull back!":preload("res://assets/sounds/radio_chatter/us/RETREAT/1.wav"),
+		"Break contact!":preload("res://assets/sounds/radio_chatter/us/RETREAT/2.wav"),
+		"Fall back!":preload("res://assets/sounds/radio_chatter/us/RETREAT/3.wav"),
+		"Disengaging!":preload("res://assets/sounds/radio_chatter/us/RETREAT/4.wav"),
 	},
 }
 
 onready var VIET_RADIO = {
 	COMMAND_ACKNOWLEDGEMENT:{
-		"Rõ.":"path/to/audio.ogg",
-		"Đã rõ.":"path/to/audio.ogg",
-		"Nhận lệnh.":"path/to/audio.ogg",
-		"Đang di chuyển.":"path/to/audio.ogg",
-		"Thi hành.":"path/to/audio.ogg",
+		"Rõ.":preload("res://assets/sounds/radio_chatter/viet/COMMAND_ACKNOWLEDGEMENT/1.wav"),
+		"Đã rõ.":preload("res://assets/sounds/radio_chatter/viet/COMMAND_ACKNOWLEDGEMENT/2.wav"),
+		"Nhận lệnh.":preload("res://assets/sounds/radio_chatter/viet/COMMAND_ACKNOWLEDGEMENT/3.wav"),
+		"Đang di chuyển.":preload("res://assets/sounds/radio_chatter/viet/COMMAND_ACKNOWLEDGEMENT/4.wav"),
+		"Thi hành.":preload("res://assets/sounds/radio_chatter/viet/COMMAND_ACKNOWLEDGEMENT/5.wav"),
 	},
 	AMBUSH_INITIATED:{
-		"Địch đã vào.":"path/to/audio.ogg",
-		"Chờ lệnh.":"path/to/audio.ogg",
-		"Nổ súng!":"path/to/audio.ogg",
-		"Tiêu diệt!":"path/to/audio.ogg",
+		"Địch đã vào.":preload("res://assets/sounds/radio_chatter/viet/AMBUSH_INITIATED/1.wav"),
+		"Chờ lệnh.":preload("res://assets/sounds/radio_chatter/viet/AMBUSH_INITIATED/2.wav"),
+		"Nổ súng!":preload("res://assets/sounds/radio_chatter/viet/AMBUSH_INITIATED/3.wav"),
+		"Tiêu diệt!":preload("res://assets/sounds/radio_chatter/viet/AMBUSH_INITIATED/4.wav"),
 	},
 	LOW_AMMO:{
-		"Sắp hết đạn!":"path/to/audio.ogg",
-		"Thiếu đạn!":"path/to/audio.ogg",
-		"Hết đạn!":"path/to/audio.ogg",
-		"Cần tiếp tế!":"path/to/audio.ogg",
+		"Sắp hết đạn!":preload("res://assets/sounds/radio_chatter/viet/LOW_AMMO/1.wav"),
+		"Thiếu đạn!":preload("res://assets/sounds/radio_chatter/viet/LOW_AMMO/2.wav"),
+		"Hết đạn!":preload("res://assets/sounds/radio_chatter/viet/LOW_AMMO/3.wav"),
+		"Cần tiếp tế!":preload("res://assets/sounds/radio_chatter/viet/LOW_AMMO/4.wav"),
 	},
 	AREA_CLEAR:{
-		"Khu vực an toàn.":"path/to/audio.ogg",
-		"Đã tiêu diệt.":"path/to/audio.ogg",
-		"Sạch địch.":"path/to/audio.ogg",
-		"Hoàn tất.":"path/to/audio.ogg",
+		"Khu vực an toàn.":preload("res://assets/sounds/radio_chatter/viet/AREA_CLEAR/1.wav"),
+		"Đã tiêu diệt.":preload("res://assets/sounds/radio_chatter/viet/AREA_CLEAR/2.wav"),
+		"Sạch địch.":preload("res://assets/sounds/radio_chatter/viet/AREA_CLEAR/3.wav"),
+		"Hoàn tất.":preload("res://assets/sounds/radio_chatter/viet/AREA_CLEAR/4.wav"),
 	},
 	CASUALTY:{
-		"Có thương binh!":"path/to/audio.ogg",
-		"Có người bị thương!":"path/to/audio.ogg",
-		"Tổn thất!":"path/to/audio.ogg",
-		"Cần cứu thương!":"path/to/audio.ogg",
+		"Có thương binh!":preload("res://assets/sounds/radio_chatter/viet/CASUALTY/1.wav"),
+		"Có người bị thương!":preload("res://assets/sounds/radio_chatter/viet/CASUALTY/2.wav"),
+		"Tổn thất!":preload("res://assets/sounds/radio_chatter/viet/CASUALTY/3.wav"),
+		"Cần cứu thương!":preload("res://assets/sounds/radio_chatter/viet/CASUALTY/4.wav"),
 	},
 	COMBAT_STATUS:{
-		"Đang giao chiến.":"path/to/audio.ogg",
-		"Bắn áp chế!":"path/to/audio.ogg",
-		"Nạp đạn!":"path/to/audio.ogg",
-		"Bị ghìm chặt!":"path/to/audio.ogg",
-		"Xung phong!":"path/to/audio.ogg",
+		"Đang giao chiến.":preload("res://assets/sounds/radio_chatter/viet/COMBAT_STATUS/1.wav"),
+		"Bắn áp chế!":preload("res://assets/sounds/radio_chatter/viet/COMBAT_STATUS/2.wav"),
+		"Nạp đạn!":preload("res://assets/sounds/radio_chatter/viet/COMBAT_STATUS/3.wav"),
+		"Bị ghìm chặt!":preload("res://assets/sounds/radio_chatter/viet/COMBAT_STATUS/4.wav"),
+		"Xung phong!":preload("res://assets/sounds/radio_chatter/viet/COMBAT_STATUS/5.wav"),
 	},
 	ENEMY_SPOTTED:{
-		"Phát hiện địch!":"path/to/audio.ogg",
-		"Có địch!":"path/to/audio.ogg",
-		"Bị bắn!":"path/to/audio.ogg",
-		"Địch phía trước!":"path/to/audio.ogg",
-		"Giao tranh!":"path/to/audio.ogg",
+		"Phát hiện địch!":preload("res://assets/sounds/radio_chatter/viet/ENEMY_SPOTTED/1.wav"),
+		"Có địch!":preload("res://assets/sounds/radio_chatter/viet/ENEMY_SPOTTED/2.wav"),
+		"Bị bắn!":preload("res://assets/sounds/radio_chatter/viet/ENEMY_SPOTTED/3.wav"),
+		"Địch phía trước!":preload("res://assets/sounds/radio_chatter/viet/ENEMY_SPOTTED/4.wav"),
+		"Giao tranh!":preload("res://assets/sounds/radio_chatter/viet/ENEMY_SPOTTED/5.wav"),
 	},
 	MOVEMENT:{
-		"Đang tiến quân.":"path/to/audio.ogg",
-		"Đã vào khu vực.":"path/to/audio.ogg",
-		"Đến vị trí.":"path/to/audio.ogg",
-		"Giữ vị trí.":"path/to/audio.ogg",
-		"Dừng lại.":"path/to/audio.ogg",
+		"Đang tiến quân.":preload("res://assets/sounds/radio_chatter/viet/MOVEMENT/1.wav"),
+		"Đã vào khu vực.":preload("res://assets/sounds/radio_chatter/viet/MOVEMENT/2.wav"),
+		"Đến vị trí.":preload("res://assets/sounds/radio_chatter/viet/MOVEMENT/3.wav"),
+		"Giữ vị trí.":preload("res://assets/sounds/radio_chatter/viet/MOVEMENT/4.wav"),
+		"Dừng lại.":preload("res://assets/sounds/radio_chatter/viet/MOVEMENT/5.wav"),
 	},
 	RETREAT:{
-		"Rút lui!":"path/to/audio.ogg",
-		"Thoát ly!":"path/to/audio.ogg",
-		"Rời khỏi giao tranh!":"path/to/audio.ogg",
-		"Rút quân!":"path/to/audio.ogg",
+		"Rút lui!":preload("res://assets/sounds/radio_chatter/viet/RETREAT/1.wav"),
+		"Thoát ly!":preload("res://assets/sounds/radio_chatter/viet/RETREAT/2.wav"),
+		"Rời khỏi giao tranh!":preload("res://assets/sounds/radio_chatter/viet/RETREAT/3.wav"),
+		"Rút quân!":preload("res://assets/sounds/radio_chatter/viet/RETREAT/4.wav"),
 	},
 }
+
+onready var queue_task = $queue_task
+onready var audio_stream_player_2d = $AudioStreamPlayer2D
+
+func play_radio(text :String, audio :Resource, clear:bool = false):
+	if clear:
+		queue_task.task_queue.clear()
+		
+	queue_task.add_task(self,"_play_audio",[text,audio])
+
+func _play_audio(text :String, audio :Resource):
+	emit_signal("on_radio_played", text)
+	audio_stream_player_2d.stream = audio
+	audio_stream_player_2d.play()
+	yield(audio_stream_player_2d,"finished")
+
+
+
+
+
+

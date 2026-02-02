@@ -178,7 +178,8 @@ _global_script_class_icons={
 
 config/name="No Frontier : Vietnam"
 run/main_scene="res://menu/main/main.tscn"
-config/icon="res://icon.png"
+boot_splash/image="res://assets/background/bg.png"
+config/icon="res://icn.png"
 
 [autoload]
 
