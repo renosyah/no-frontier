@@ -1,10 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/fonts/montserrat_eb_14.tres" type="DynamicFont" id=1]
 [ext_resource path="res://addons/SafeArea/SafeArea.gd" type="Script" id=2]
 [ext_resource path="res://menu/main/ui/ui.gd" type="Script" id=3]
 [ext_resource path="res://assets/background/main_menu.png" type="Texture" id=4]
-[ext_resource path="res://assets/sounds/radio_chatter/radio_chatters.tscn" type="PackedScene" id=5]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -40,19 +39,6 @@ margin_right = 600.0
 margin_bottom = 1024.0
 alignment = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/VBoxContainer"]
-margin_right = 600.0
-margin_bottom = 856.0
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/CenterContainer"]
-margin_left = 258.0
-margin_top = 417.0
-margin_right = 342.0
-margin_bottom = 438.0
-custom_fonts/font = ExtResource( 1 )
-text = "Radio : ...."
-
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
 margin_top = 860.0
 margin_right = 600.0
@@ -87,8 +73,5 @@ margin_right = 600.0
 margin_bottom = 1024.0
 rect_min_size = Vector2( 0, 80 )
 
-[node name="radio_chatters" parent="." instance=ExtResource( 5 )]
-
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer/play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer/editor" to="." method="_on_editor_pressed"]
-[connection signal="on_radio_played" from="radio_chatters" to="." method="_on_radio_chatters_on_radio_played"]

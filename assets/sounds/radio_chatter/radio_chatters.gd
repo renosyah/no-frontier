@@ -137,19 +137,27 @@ onready var VIET_RADIO = {
 }
 
 onready var queue_task = $queue_task
-onready var audio_stream_player_2d = $AudioStreamPlayer2D
+onready var speaker = $speaker
+onready var static_ambient = $static_ambient
+onready var delays = $delays
 
 func play_radio(text :String, audio :Resource, clear:bool = false):
 	if clear:
 		queue_task.task_queue.clear()
 		
-	queue_task.add_task(self,"_play_audio",[text,audio])
+	queue_task.add_task(self,"_play_radio",[text,audio])
 
-func _play_audio(text :String, audio :Resource):
+func _play_radio(text :String, audio :Resource):
 	emit_signal("on_radio_played", text)
-	audio_stream_player_2d.stream = audio
-	audio_stream_player_2d.play()
-	yield(audio_stream_player_2d,"finished")
+	speaker.stream = audio
+	static_ambient.play()
+	delays.start()
+	
+	yield(delays,"timeout")
+	speaker.play()
+	
+	yield(speaker,"finished")
+	static_ambient.stop()
 
 
 

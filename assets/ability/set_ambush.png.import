@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/medkit.png-c670be0e5fdcfe009daa1b3c99d25bd6.stex"
+path="res://.import/set_ambush.png-29b84febdf6c1f667e65bace7aee2eef.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/weapon_image/medkit.png"
-dest_files=[ "res://.import/medkit.png-c670be0e5fdcfe009daa1b3c99d25bd6.stex" ]
+source_file="res://assets/ability/set_ambush.png"
+dest_files=[ "res://.import/set_ambush.png-29b84febdf6c1f667e65bace7aee2eef.stex" ]
 
 [params]
 
