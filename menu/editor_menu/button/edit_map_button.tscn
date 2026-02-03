@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://assets/icons/editor_menu_icon/tile_capture.png" type="Texture" id=1]
+[ext_resource path="res://assets/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
+[ext_resource path="res://menu/editor_menu/button/edit_map_button.gd" type="Script" id=3]
+
+[node name="edit_map_button" type="MarginContainer"]
+margin_right = 145.0
+margin_bottom = 145.0
+rect_min_size = Vector2( 145, 145 )
+mouse_filter = 2
+script = ExtResource( 3 )
+
+[node name="Button" type="Button" parent="."]
+margin_left = 15.0
+margin_top = 20.0
+margin_right = 145.0
+margin_bottom = 145.0
+rect_min_size = Vector2( 130, 125 )
+size_flags_horizontal = 8
+size_flags_vertical = 8
+custom_fonts/font = ExtResource( 2 )
+icon = ExtResource( 1 )
+icon_align = 1
+expand_icon = true
+
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

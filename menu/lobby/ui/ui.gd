@@ -16,3 +16,7 @@ func _notification(what):
 			
 func on_back_pressed():
 	get_tree().change_scene("res://menu/main/main.tscn")
+
+
+func _on_back_pressed():
+	on_back_pressed()

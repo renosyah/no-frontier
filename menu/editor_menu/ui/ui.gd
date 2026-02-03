@@ -1,8 +1,33 @@
 extends Control
 
+const edit_map_button = preload("res://menu/editor_menu/button/edit_map_button.tscn")
+
+onready var grid_container = $CanvasLayer/Control/VBoxContainer/ScrollContainer/GridContainer
+
+onready var loaded_maps = []
+onready var loaded_maps_edit_buttons = []
+
 func _ready():
 	get_tree().set_quit_on_go_back(false)
 	get_tree().set_auto_accept_quit(false)
+	
+	_load_maps()
+	_show_maps()
+	
+func _load_maps():
+	loaded_maps.append(1)
+	
+func _show_maps():
+	for i in loaded_maps_edit_buttons:
+		grid_container.remove_child(i)
+	loaded_maps_edit_buttons.clear()
+	
+	for i in loaded_maps:
+		var loaded_maps_edit_button = edit_map_button.instance()
+		loaded_maps_edit_button.connect("pressed", self, "_loaded_maps_edit_button_pressed")
+		grid_container.add_child(loaded_maps_edit_button)
+		grid_container.move_child(loaded_maps_edit_button, 0)
+		loaded_maps_edit_buttons.append(loaded_maps_edit_button)
 	
 func _notification(what):
 	match what:
@@ -16,3 +41,12 @@ func _notification(what):
 			
 func on_back_pressed():
 	get_tree().change_scene("res://menu/main/main.tscn")
+
+func _on_back_pressed():
+	on_back_pressed()
+	
+func _loaded_maps_edit_button_pressed():
+	get_tree().change_scene("res://menu/editor/editor.tscn")
+	
+func _on_add_map_button_pressed():
+	get_tree().change_scene("res://menu/editor/editor.tscn")

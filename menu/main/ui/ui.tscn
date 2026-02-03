@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/fonts/montserrat_eb_14.tres" type="DynamicFont" id=1]
 [ext_resource path="res://addons/SafeArea/SafeArea.gd" type="Script" id=2]
 [ext_resource path="res://menu/main/ui/ui.gd" type="Script" id=3]
 [ext_resource path="res://assets/background/main_menu.png" type="Texture" id=4]
+[ext_resource path="res://assets/background/border.png" type="Texture" id=5]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -21,6 +22,13 @@ anchor_bottom = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 4 )
+stretch_mode = 7
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/bg"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 5 )
+expand = true
 stretch_mode = 7
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/bg"]
