@@ -140,6 +140,11 @@ _global_script_classes=[ {
 "path": "res://data/tile_map/tile_map_file_data.gd"
 }, {
 "base": "Node",
+"class": "TileMapUtils",
+"language": "GDScript",
+"path": "res://utils/tile_map_utils.gd"
+}, {
+"base": "Node",
 "class": "Utils",
 "language": "GDScript",
 "path": "res://utils/utils.gd"
@@ -171,6 +176,7 @@ _global_script_class_icons={
 "ServerListener": "res://addons/LANServerBroadcast/server_listener/server_listener.png",
 "TileMapData": "",
 "TileMapFileData": "",
+"TileMapUtils": "",
 "Utils": ""
 }
 
