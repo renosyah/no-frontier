@@ -19,12 +19,5 @@ monitorable = false
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 shape = SubResource( 1 )
 
-[node name="StaticBody" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
-collision_mask = 0
-
-[node name="CollisionShape2" type="CollisionShape" parent="StaticBody"]
-shape = SubResource( 1 )
-
 [connection signal="any_gesture" from="input_detection" to="." method="_on_input_detection_any_gesture"]
 [connection signal="input_event" from="Area" to="." method="_on_Area_input_event"]

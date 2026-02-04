@@ -4,6 +4,7 @@ onready var ui = $ui
 onready var movable_camera = $movable_camera
 onready var grand_map = $grand_map
 onready var clickable_floor = $clickable_floor
+onready var selection = $selection
 
 func _ready():
 	ui.movable_camera_ui.target = movable_camera
@@ -12,8 +13,9 @@ func _ready():
 	get_tree().set_auto_accept_quit(false)
 	
 	# example only
-	grand_map.generate_from_data(TileMapUtils.generate_basic_tile_map(2))
-
+	var data = TileMapUtils.generate_basic_tile_map(2)
+	grand_map.generate_from_data(data)
+	
 func _process(delta):
 	clickable_floor.translation = movable_camera.translation * Vector3(1,0,1)
 
@@ -37,9 +39,9 @@ func _on_clickable_floor_on_floor_clicked(pos):
 	# example only
 	var tile = grand_map.get_closes_tile(pos)
 	print("tile clicked : %s" % tile.translation)
-	$redball_test.translation = tile.translation
+	selection.translation = tile.translation
 
 func _on_ui_screen_pressed(pos):
 	# example only
 	var tile = grand_map.get_closes_tile(pos)
-	$redball_test.translation = tile.translation
+	selection.translation = tile.translation

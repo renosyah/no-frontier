@@ -6,16 +6,8 @@
 [ext_resource path="res://assets/camera/movable_camera.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/clickable_floor/clickable_floor.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/enviroment/enviroment.tscn" type="PackedScene" id=6]
-
-[sub_resource type="SphereMesh" id=1]
-radius = 0.2
-height = 0.4
-radial_segments = 16
-rings = 8
-
-[sub_resource type="SpatialMaterial" id=2]
-flags_unshaded = true
-albedo_color = Color( 1, 0, 0, 1 )
+[ext_resource path="res://assets/tile_highlight/selection.tscn" type="PackedScene" id=7]
+[ext_resource path="res://assets/tile_highlight/contested_area.tscn" type="PackedScene" id=8]
 
 [node name="editor" type="Node"]
 script = ExtResource( 1 )
@@ -31,10 +23,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 2 )
 
 [node name="grand_map" parent="." instance=ExtResource( 3 )]
 
-[node name="redball_test" type="MeshInstance" parent="."]
-mesh = SubResource( 1 )
-software_skinning_transform_normals = false
-material/0 = SubResource( 2 )
+[node name="selection" parent="." instance=ExtResource( 7 )]
+
+[node name="contested_area2" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.05, 0, 2.1 )
+
+[node name="contested_area" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05, 0, -2.1 )
 
 [connection signal="screen_pressed" from="ui" to="." method="_on_ui_screen_pressed"]
 [connection signal="on_floor_clicked" from="clickable_floor" to="." method="_on_clickable_floor_on_floor_clicked"]

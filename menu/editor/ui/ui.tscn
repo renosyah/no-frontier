@@ -17,7 +17,7 @@ script = ExtResource( 2 )
 [node name="clickable_screen" parent="CanvasLayer" instance=ExtResource( 4 )]
 visible = false
 
-[node name="Sprite" type="Sprite" parent="CanvasLayer/clickable_screen"]
+[node name="Sprite" type="Sprite" parent="CanvasLayer"]
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 5 )
 

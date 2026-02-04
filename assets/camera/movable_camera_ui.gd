@@ -7,7 +7,7 @@ export var min_zoom :float = 5
 export var max_zoom :float = 20
 
 export var center_pos :Vector3 = Vector3(0, 0, 2)
-export(float) var limit_x = 2.0
+export(float) var limit_x = 3.0
 export(float) var limit_z = 2.0
 
 var move_speed := 0.018

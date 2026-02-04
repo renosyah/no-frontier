@@ -2,10 +2,10 @@
 
 [sub_resource type="ProceduralSky" id=2]
 radiance_size = 0
-sky_top_color = Color( 0.658824, 0.74902, 0.796078, 1 )
+sky_top_color = Color( 0.458824, 0.490196, 0.501961, 1 )
 sky_horizon_color = Color( 0.231373, 0.352941, 0.231373, 1 )
-ground_bottom_color = Color( 0.0627451, 0.356863, 0.105882, 1 )
-ground_horizon_color = Color( 0.239216, 0.309804, 0.239216, 1 )
+ground_bottom_color = Color( 0.0352941, 0.282353, 0.0705882, 1 )
+ground_horizon_color = Color( 0.152941, 0.211765, 0.152941, 1 )
 texture_size = 0
 
 [sub_resource type="Environment" id=1]

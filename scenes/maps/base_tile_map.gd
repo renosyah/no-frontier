@@ -18,6 +18,7 @@ func generate_from_data(data: TileMapFileData, is_editor:bool = false):
 	_tile_map_data = data
 	
 	_spawn_tiles()
+	_spawn_objects()
 	_update_navigations()
 	
 	yield(get_tree(),"idle_frame")
@@ -106,6 +107,16 @@ func _spawn_tile(data :TileMapData) -> BaseTile:
 	# overide this function to spawn tiles
 	# then return spawn tile instance
 	return null
+	
+func _spawn_objects():
+	for i in _tile_map_data.objects:
+		var data :MapObjectData = i
+		_spawn_object(data)
+	
+func _spawn_object(data :MapObjectData):
+	# TODO
+	# overide this function to spawn object
+	pass
 	
 func _get_navigation(_nav :AStar2D, start :int, end :int, _blocked_nav_ids :Array) -> PoolVector2Array:
 	var paths :PoolVector2Array = PoolVector2Array([])
