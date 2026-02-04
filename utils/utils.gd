@@ -20,12 +20,12 @@ static func get_all_resources(path: String, extensions := ["tres", "res", "tscn"
 	
 	return files
 	
-static func screen_to_world(cam :Camera, screen_pos: Vector2) -> Vector3:
+static func screen_to_world(cam :Camera, screen_pos: Vector2, with_body :bool = true, collision_mask :int = 0b11) -> Vector3:
 	var from = cam.project_ray_origin(screen_pos)
 	var dir = cam.project_ray_normal(screen_pos)
 	
 	var result :Dictionary = cam.get_world().direct_space_state.intersect_ray(
-		from, from + dir * 1000, [], 0b11
+		from, from + dir * 1000, [], collision_mask, with_body, not with_body
 	)
 	if not result.empty():
 		return result["position"]

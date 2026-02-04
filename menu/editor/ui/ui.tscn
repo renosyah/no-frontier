@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://addons/SafeArea/SafeArea.gd" type="Script" id=1]
 [ext_resource path="res://menu/editor/ui/ui.gd" type="Script" id=2]
 [ext_resource path="res://assets/camera/movable_camera_ui.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/clickable_screen/clickable_screen.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/icons/editor_menu_icon/tile_base.png" type="Texture" id=5]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -11,6 +13,13 @@ mouse_filter = 2
 script = ExtResource( 2 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="clickable_screen" parent="CanvasLayer" instance=ExtResource( 4 )]
+visible = false
+
+[node name="Sprite" type="Sprite" parent="CanvasLayer/clickable_screen"]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 5 )
 
 [node name="Control" type="MarginContainer" parent="CanvasLayer"]
 anchor_right = 1.0
@@ -23,3 +32,5 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 600.0
 margin_bottom = 1024.0
+
+[connection signal="on_screen_clicked" from="CanvasLayer/clickable_screen" to="." method="_on_clickable_screen_on_screen_clicked"]

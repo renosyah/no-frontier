@@ -6,6 +6,10 @@ var target :Spatial
 export var min_zoom :float = 5
 export var max_zoom :float = 20
 
+export var center_pos :Vector3 = Vector3(0, 0, 2)
+export(float) var limit_x = 2.0
+export(float) var limit_z = 2.0
+
 var move_speed := 0.018
 var zoom_speed := 0.02
 
@@ -32,6 +36,11 @@ func _unhandled_input(event):
 			var zoom_factor = (target.translation.y / max_zoom)
 			var adjusted_move_speed = move_speed * zoom_factor
 			target.translate(Vector3(-delta.x * adjusted_move_speed, 0, -delta.y * adjusted_move_speed))
+			
+			var pos = target.translation
+			pos.x = clamp(pos.x, center_pos.x - limit_x, center_pos.x + limit_x)
+			pos.z = clamp(pos.z, center_pos.z - limit_z, center_pos.z + limit_z)
+			target.translation = pos
 	
 		elif touches.size() == 2:
 			# Pinch zoom

@@ -1,9 +1,6 @@
 extends BaseData
 class_name TileMapFileData
 
-var map_name :String
-var map_size :int # (4, 6, 8)
-
 var tile_ids :Dictionary # { Vector2: int }
 var tiles : Array # [ TileMapData ]
 
@@ -11,9 +8,6 @@ var objects : Array # [ MapObjectData ]
 var navigations : Array # [ NavigationData ]
 
 func from_dictionary(_data : Dictionary):
-	map_name = _data["map_name"]
-	map_size = _data["map_size"]
-	
 	tile_ids = {} # { Vector2: int }
 	for key in _data["tile_ids"].keys():
 		tile_ids[key] = _data["tile_ids"][key]
@@ -26,10 +20,6 @@ func from_dictionary(_data : Dictionary):
 		
 func to_dictionary() -> Dictionary :
 	var _data :Dictionary = {}
-	
-	_data["map_name"] = map_name
-	_data["map_size"] = map_size
-	
 	_data["tile_ids"] = {} # { Vector2: int }
 	for key in tile_ids.keys():
 		_data["tile_ids"][key] = tile_ids[key]

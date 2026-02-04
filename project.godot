@@ -34,6 +34,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/tile_objects/base_tile_object.gd"
 }, {
+"base": "Spatial",
+"class": "ClickableFloor",
+"language": "GDScript",
+"path": "res://assets/clickable_floor/clickable_floor.gd"
+}, {
+"base": "Control",
+"class": "ClickableScreen",
+"language": "GDScript",
+"path": "res://assets/clickable_screen/clickable_screen.gd"
+}, {
 "base": "InputEventAction",
 "class": "InputEventMultiScreenDrag",
 "language": "GDScript",
@@ -139,6 +149,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://data/tile_map/tile_map_file_data.gd"
 }, {
+"base": "BaseData",
+"class": "TileMapFileManifest",
+"language": "GDScript",
+"path": "res://data/tile_map/tile_map_file_manifest.gd"
+}, {
 "base": "Node",
 "class": "TileMapUtils",
 "language": "GDScript",
@@ -155,6 +170,8 @@ _global_script_class_icons={
 "BaseTile": "",
 "BaseTileMap": "",
 "BaseTileObject": "",
+"ClickableFloor": "",
+"ClickableScreen": "",
 "InputEventMultiScreenDrag": "",
 "InputEventScreenPinch": "",
 "InputEventScreenTwist": "",
@@ -176,6 +193,7 @@ _global_script_class_icons={
 "ServerListener": "res://addons/LANServerBroadcast/server_listener/server_listener.png",
 "TileMapData": "",
 "TileMapFileData": "",
+"TileMapFileManifest": "",
 "TileMapUtils": "",
 "Utils": ""
 }
