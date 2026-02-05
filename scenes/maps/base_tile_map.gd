@@ -5,6 +5,7 @@ signal on_map_ready
 
 var _click_position :Vector3
 var _spawned_tiles :Dictionary = {} # { Vector2 : BaseTile }
+var _spawned_objects :Dictionary = {} # { Vector2 : BaseTileObject }
 var _tile_map_data :TileMapFileData
 var _is_editor :bool = false
 
@@ -36,6 +37,35 @@ func has_tile(id :Vector2) -> bool:
 func get_tile(id :Vector2) -> BaseTile:
 	return _spawned_tiles[id] # Tile
 	
+func update_spawned_object(data :MapObjectData):
+	remove_spawned_object(data.id)
+	
+	# spawn new
+	var obj :BaseTileObject = _spawn_object(data)
+	obj.visible = true
+	_spawned_objects[data.id] = obj
+	
+	# update to _tile_map_data
+	if _is_editor:
+		_tile_map_data.objects.append(data)
+	
+func remove_spawned_object(id :Vector2):
+	if _spawned_objects.has(id):
+		var _spawned_obj :BaseTileObject = _spawned_objects[id]
+		_spawned_obj.queue_free()
+		_spawned_objects.erase(id)
+		
+	# update to _tile_map_data
+	if _is_editor:
+		var pos = 0
+		for i in _tile_map_data.objects:
+			var x :MapObjectData = i
+			if x.id == id:
+				_tile_map_data.objects.remove(pos)
+				return
+				
+			pos += 1
+			
 func update_spawned_tile(data :TileMapData):
 	var _spawned_tile :BaseTile = _spawned_tiles[data.id]
 	
@@ -101,7 +131,7 @@ func get_closes_tile(from :Vector3) -> TileMapData:
 		if dist_2 < dist_1:
 			current = i
 			
-	return current # BaseTile
+	return current # TileMapData
 	
 # param blocked_ids is usefull for 
 # seting temporary blocked tile
@@ -128,12 +158,12 @@ func _spawn_tile(data :TileMapData) -> BaseTile:
 func _spawn_objects():
 	for i in _tile_map_data.objects:
 		var data :MapObjectData = i
-		_spawn_object(data)
+		_spawned_objects[data.id] = _spawn_object(data)
 	
-func _spawn_object(data :MapObjectData):
+func _spawn_object(data :MapObjectData) -> BaseTileObject:
 	# TODO
 	# overide this function to spawn object
-	pass
+	return null
 	
 func _get_navigation(_nav :AStar2D, start :int, end :int, _blocked_nav_ids :Array) -> PoolVector2Array:
 	var paths :PoolVector2Array = PoolVector2Array([])
@@ -211,3 +241,10 @@ func _clean():
 		tile.queue_free()
 		
 	_spawned_tiles.clear()
+	
+	for key in _spawned_objects.keys():
+		var obj :BaseTileObject = _spawned_objects[key]
+		obj.queue_free()
+		
+	_spawned_objects.clear()
+

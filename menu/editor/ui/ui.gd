@@ -60,13 +60,38 @@ func update_tile_water(at :Vector2):
 	emit_signal("on_update_tile", data)
 	
 func add_object_forest(at :Vector2):
-	pass
+	var pos3 = Utils.screen_to_world(get_viewport().get_camera(), at, false, 4)
+	var data :MapObjectData = MapObjectData.new()
+	data.id = Vector2.ZERO
+	data.pos = pos3
+	data.scene = preload("res://scenes/tile_objects/grand/forest_1.tscn")
+	data.is_blocking = false
+	
+	emit_signal("on_add_object", data)
+	
 func add_object_base(at :Vector2):
-	pass
+	var pos3 = Utils.screen_to_world(get_viewport().get_camera(), at, false, 4)
+	var data :MapObjectData = MapObjectData.new()
+	data.id = Vector2.ZERO
+	data.pos = pos3
+	data.scene = preload("res://scenes/tile_objects/grand/faction_base.tscn")
+	data.is_blocking = false
+	
+	emit_signal("on_add_object", data)
+	
 func add_object_capture(at :Vector2):
-	pass
+	var pos3 = Utils.screen_to_world(get_viewport().get_camera(), at, false, 4)
+	var data :MapObjectData = MapObjectData.new()
+	data.id = Vector2.ZERO
+	data.pos = pos3
+	data.scene = preload("res://scenes/tile_objects/grand/flag_pole.tscn")
+	data.is_blocking = false
+	
+	emit_signal("on_add_object", data)
+	
 func remove_object(at :Vector2):
-	pass
+	var pos3 = Utils.screen_to_world(get_viewport().get_camera(), at, false, 4)
+	emit_signal("on_remove_object", pos3)
 	
 	
 func untoggle_buttons(exc):

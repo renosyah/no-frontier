@@ -13,7 +13,7 @@ func _ready():
 	
 	# example only
 	var data = TileMapUtils.generate_basic_tile_map(2)
-	grand_map.generate_from_data(data)
+	grand_map.generate_from_data(data, true)
 	
 func _process(delta):
 	clickable_floor.translation = movable_camera.translation * Vector3(1,0,1)
@@ -32,12 +32,33 @@ func on_back_pressed():
 	get_tree().change_scene("res://menu/editor_menu/editor_menu.tscn")
 
 func _on_clickable_floor_on_floor_clicked(pos):
-	# example only
-	var tile = grand_map.get_closes_tile_instance(pos)
-	print("tile clicked : %s" % tile.translation)
+	pass
 
 func _on_ui_on_update_tile(data :TileMapData):
 	var old_tile = grand_map.get_closes_tile(data.pos)
 	data.id = old_tile.id
 	data.pos = old_tile.pos
 	grand_map.update_spawned_tile(data)
+	
+	if data.tile_type == 2:
+		grand_map.remove_spawned_object(data.id)
+
+func _on_ui_on_add_object(data :MapObjectData):
+	var tile = grand_map.get_closes_tile(data.pos)
+	if tile.tile_type == 2:
+		return
+		
+	data.id = tile.id
+	data.pos = tile.pos
+	grand_map.update_spawned_object(data)
+
+func _on_ui_on_remove_object(pos):
+	var tile = grand_map.get_closes_tile(pos)
+	grand_map.remove_spawned_object(tile.id)
+
+
+
+
+
+
+

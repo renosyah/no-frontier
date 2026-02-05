@@ -13,7 +13,9 @@ func _spawn_tile(data :TileMapData) -> BaseTile:
 	return tile
 	
 # override
-func _spawn_object(data :MapObjectData):
+func _spawn_object(data :MapObjectData) -> BaseTileObject:
 	var obj :BaseTileObject = data.scene.instance()
 	add_child(obj)
+	obj.name = 'obj_%s' % data.id
 	obj.translation = data.pos
+	return obj
