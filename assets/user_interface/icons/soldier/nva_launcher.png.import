@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/grunt.png-aea1fd932c6137f9c56c5838f3194aca.stex"
+path="res://.import/nva_launcher.png-e2863f3d2087a2ee136ceab1a1f14c09.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/user_interface/icons/soldier/grunt.png"
-dest_files=[ "res://.import/grunt.png-aea1fd932c6137f9c56c5838f3194aca.stex" ]
+source_file="res://assets/user_interface/icons/soldier/nva_launcher.png"
+dest_files=[ "res://.import/nva_launcher.png-e2863f3d2087a2ee136ceab1a1f14c09.stex" ]
 
 [params]
 
