@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/tile_highlight/blocked_nav_material.tres" type="Material" id=1]
+
+[sub_resource type="PlaneMesh" id=1]
+size = Vector2( 1, 1 )
+
+[node name="nav_highlight" type="MeshInstance"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12656, 0 )
+cast_shadow = 0
+mesh = SubResource( 1 )
+software_skinning_transform_normals = false
+material/0 = ExtResource( 1 )

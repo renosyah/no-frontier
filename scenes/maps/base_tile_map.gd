@@ -2,6 +2,9 @@ extends Spatial
 class_name BaseTileMap
 
 signal on_map_ready
+signal on_tile_updated
+signal on_object_updated
+signal on_navigation_updated
 
 var _click_position :Vector3
 var _spawned_tiles :Dictionary = {} # { Vector2 : BaseTile }
@@ -37,6 +40,13 @@ func has_tile(id :Vector2) -> bool:
 func get_tile(id :Vector2) -> BaseTile:
 	return _spawned_tiles[id] # Tile
 	
+func is_navigation_enable(id :Vector2) -> bool:
+	var nav_id :int = _tile_map_data.tile_ids[id]
+	if not _navigation.has_point(nav_id):
+		return false
+		
+	return not _navigation.is_point_disabled(nav_id)
+	
 func update_spawned_object(data :MapObjectData):
 	remove_spawned_object(data.id)
 	
@@ -62,10 +72,12 @@ func remove_spawned_object(id :Vector2):
 			var x :MapObjectData = i
 			if x.id == id:
 				_tile_map_data.objects.remove(pos)
-				return
+				break
 				
 			pos += 1
 			
+	emit_signal("on_object_updated", id)
+	
 func update_spawned_tile(data :TileMapData):
 	var _spawned_tile :BaseTile = _spawned_tiles[data.id]
 	
@@ -85,10 +97,12 @@ func update_spawned_tile(data :TileMapData):
 			var x :TileMapData = i
 			if x.id == data.id:
 				_tile_map_data.tiles[pos] = data
-				return
+				break
 				
 			pos += 1
 			
+	emit_signal("on_tile_updated", data.id)
+	
 func update_navigation_tile(at :Vector2, enable :bool, _is_air :bool = false):
 	var _nav :AStar2D = _air_navigation if _is_air else _navigation
 	_enable_nav_tile(_nav, at, enable)
@@ -97,8 +111,10 @@ func update_navigation_tile(at :Vector2, enable :bool, _is_air :bool = false):
 		for i in _tile_map_data.navigations:
 			if i.id == at:
 				i.enable = enable
-				return
+				break
 				
+	emit_signal("on_navigation_updated", at)
+	
 func get_closes_tile_instance(from :Vector3) -> BaseTile:
 	var tiles :Array = get_tiles()
 	if tiles.empty():
@@ -218,7 +234,7 @@ func _set_obstacle(nav :AStar2D, data :Array):
 		var x :NavigationData = i
 		_enable_nav_tile(nav, x.id, x.enable)
 	
-func _enable_nav_tile(nav :AStar2D, id : Vector2, enable :bool = true):
+func _enable_nav_tile(nav :AStar2D, id :Vector2, enable :bool = true):
 	if _tile_map_data == null:
 		return
 		

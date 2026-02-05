@@ -43,7 +43,9 @@ static func generate_basic_tile_map(size :int, is_grand_map :bool = true) -> Til
 		for i in _tiles:
 			if tile_ids.has(i):
 				nav_data.neighbors.append(tile_ids[i])
-	
+				
+		navigations.append(nav_data)
+		
 	var map_data :TileMapFileData = TileMapFileData.new()
 	map_data.tiles = tile_datas
 	map_data.tile_ids = tile_ids

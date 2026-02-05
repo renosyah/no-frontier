@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://addons/SafeArea/SafeArea.gd" type="Script" id=1]
 [ext_resource path="res://menu/editor/ui/ui.gd" type="Script" id=2]
@@ -16,8 +16,9 @@
 [ext_resource path="res://assets/user_interface/icons/editor_menu_card/water_tile_card.png" type="Texture" id=14]
 [ext_resource path="res://assets/user_interface/icons/editor_menu_card/forest_tile_card.png" type="Texture" id=15]
 [ext_resource path="res://assets/user_interface/icons/editor_menu_card/faction_base_card.png" type="Texture" id=16]
-[ext_resource path="res://assets/user_interface/icons/editor_menu_card/ground_tile_card_clean.png" type="Texture" id=17]
+[ext_resource path="res://assets/user_interface/icons/editor_menu_icon/grand_map.png" type="Texture" id=17]
 [ext_resource path="res://assets/user_interface/icons/editor_menu_card/capture_point_card.png" type="Texture" id=18]
+[ext_resource path="res://assets/user_interface/icons/editor_menu_icon/tile_nav.png" type="Texture" id=19]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -31,6 +32,7 @@ script = ExtResource( 2 )
 margin_right = 60.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 60, 60 )
+rect_pivot_offset = Vector2( 30, 30 )
 expand = true
 
 [node name="movable_camera_ui" parent="CanvasLayer" instance=ExtResource( 3 )]
@@ -66,9 +68,9 @@ mouse_filter = 2
 alignment = 1
 
 [node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer"]
-margin_top = 182.0
+margin_top = 122.0
 margin_right = 100.0
-margin_bottom = 222.0
+margin_bottom = 162.0
 rect_min_size = Vector2( 0, 40 )
 custom_fonts/font = ExtResource( 12 )
 text = "Tile"
@@ -76,21 +78,49 @@ align = 1
 valign = 1
 
 [node name="ground_tile" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer" instance=ExtResource( 4 )]
-margin_top = 226.0
-margin_bottom = 326.0
+margin_top = 166.0
+margin_bottom = 266.0
 button_image = ExtResource( 13 )
+manual_toggle = true
 
 [node name="water_tile" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer" instance=ExtResource( 4 )]
-margin_top = 330.0
-margin_bottom = 430.0
+margin_top = 270.0
+margin_bottom = 370.0
 id = 1
 button_image = ExtResource( 5 )
+manual_toggle = true
 
 [node name="object_forest" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer" instance=ExtResource( 4 )]
-margin_top = 434.0
-margin_bottom = 534.0
+margin_top = 374.0
+margin_bottom = 474.0
 id = 2
 button_image = ExtResource( 7 )
+manual_toggle = true
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer"]
+margin_top = 478.0
+margin_right = 100.0
+margin_bottom = 490.0
+rect_min_size = Vector2( 0, 12 )
+
+[node name="zoom_in_card" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer" instance=ExtResource( 6 )]
+margin_top = 494.0
+margin_bottom = 594.0
+id = 6
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/zoom_in_card"]
+show_behind_parent = true
+margin_right = 100.0
+margin_bottom = 100.0
+texture = ExtResource( 17 )
+expand = true
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/zoom_in_card/TextureRect"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0.384314, 0.0862745, 1 )
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2"]
 anchor_left = 1.0
@@ -101,9 +131,9 @@ mouse_filter = 2
 alignment = 1
 
 [node name="Label2" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2"]
-margin_top = 182.0
+margin_top = 122.0
 margin_right = 100.0
-margin_bottom = 222.0
+margin_bottom = 162.0
 rect_min_size = Vector2( 0, 40 )
 custom_fonts/font = ExtResource( 12 )
 text = "Map"
@@ -111,22 +141,48 @@ align = 1
 valign = 1
 
 [node name="faction_base" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2" instance=ExtResource( 4 )]
-margin_top = 226.0
-margin_bottom = 326.0
+margin_top = 166.0
+margin_bottom = 266.0
 id = 3
 button_image = ExtResource( 8 )
+manual_toggle = true
 
 [node name="capture_point" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2" instance=ExtResource( 4 )]
-margin_top = 330.0
-margin_bottom = 430.0
+margin_top = 270.0
+margin_bottom = 370.0
 id = 4
 button_image = ExtResource( 10 )
+manual_toggle = true
 
-[node name="remove_object" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2" instance=ExtResource( 4 )]
-margin_top = 434.0
-margin_bottom = 534.0
+[node name="show_nav" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2" instance=ExtResource( 4 )]
+margin_top = 374.0
+margin_bottom = 474.0
+button_image = ExtResource( 19 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+margin_top = 478.0
+margin_right = 100.0
+margin_bottom = 490.0
+rect_min_size = Vector2( 0, 12 )
+
+[node name="object_remove_card" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2" instance=ExtResource( 6 )]
+margin_top = 494.0
+margin_bottom = 594.0
 id = 5
-button_image = ExtResource( 9 )
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/object_remove_card"]
+show_behind_parent = true
+margin_right = 100.0
+margin_bottom = 100.0
+texture = ExtResource( 9 )
+expand = true
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/object_remove_card/TextureRect"]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0.45098, 0, 0, 1 )
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
 margin_top = 824.0
@@ -210,17 +266,4 @@ margin_bottom = 150.0
 texture = ExtResource( 18 )
 expand = true
 
-[node name="object_remove_card" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer3" instance=ExtResource( 6 )]
-visible = false
-margin_left = 302.0
-margin_right = 427.0
-margin_bottom = 150.0
-rect_min_size = Vector2( 125, 150 )
-id = 5
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer3/object_remove_card"]
-show_behind_parent = true
-margin_right = 125.0
-margin_bottom = 150.0
-texture = ExtResource( 17 )
-expand = true
+[connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/show_nav" to="." method="_on_show_nav_pressed"]
