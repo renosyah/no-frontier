@@ -32,31 +32,6 @@ static func generate_basic_tile_map(size :int, is_grand_map :bool = true) -> Til
 		var nav_id = tile_datas.size()
 		tile_ids[id] = nav_id
 		
-		# water
-		if id in [Vector2.ZERO , Vector2(-1, 1), Vector2(1, -1)]:
-			data.tile_type = 2
-			continue
-			
-		var object = MapObjectData.new()
-		object.pos = data.pos
-		# bases
-		if id in [Vector2(-2,0),Vector2(2,0)]:
-			object.scene = preload("res://scenes/tile_objects/grand/faction_base.tscn")
-			
-		# capture point
-		elif id in [Vector2(0,-1),Vector2(0,1)]:
-			object.scene = preload("res://scenes/tile_objects/grand/flag_pole.tscn")
-			
-		else:
-			var forests = [
-				preload("res://scenes/tile_objects/grand/forest_1.tscn"),
-				preload("res://scenes/tile_objects/grand/forest_2.tscn")
-			]
-			object.scene = forests[randi() % 2]
-			
-		object.is_blocking = false
-		objects.append(object)
-		
 	for id in tiles:
 		var nav_data :NavigationData = NavigationData.new()
 		nav_data.id = id

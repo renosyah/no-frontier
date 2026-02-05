@@ -4,7 +4,6 @@ onready var ui = $ui
 onready var movable_camera = $movable_camera
 onready var grand_map = $grand_map
 onready var clickable_floor = $clickable_floor
-onready var selection = $selection
 
 func _ready():
 	ui.movable_camera_ui.target = movable_camera
@@ -32,16 +31,13 @@ func _notification(what):
 func on_back_pressed():
 	get_tree().change_scene("res://menu/editor_menu/editor_menu.tscn")
 
-func _on_grand_map_on_map_ready():
-	pass
-
 func _on_clickable_floor_on_floor_clicked(pos):
 	# example only
-	var tile = grand_map.get_closes_tile(pos)
+	var tile = grand_map.get_closes_tile_instance(pos)
 	print("tile clicked : %s" % tile.translation)
-	selection.translation = tile.translation
 
-func _on_ui_screen_pressed(pos):
-	# example only
-	var tile = grand_map.get_closes_tile(pos)
-	selection.translation = tile.translation
+func _on_ui_on_update_tile(data :TileMapData):
+	var old_tile = grand_map.get_closes_tile(data.pos)
+	data.id = old_tile.id
+	data.pos = old_tile.pos
+	grand_map.update_spawned_tile(data)

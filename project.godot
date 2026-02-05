@@ -42,7 +42,12 @@ _global_script_classes=[ {
 "base": "Control",
 "class": "ClickableScreen",
 "language": "GDScript",
-"path": "res://assets/clickable_screen/clickable_screen.gd"
+"path": "res://assets/user_interface/clickable_screen/clickable_screen.gd"
+}, {
+"base": "MarginContainer",
+"class": "DragableCard",
+"language": "GDScript",
+"path": "res://menu/editor/ui/dragable_card/dragable_card.gd"
 }, {
 "base": "InputEventAction",
 "class": "InputEventMultiScreenDrag",
@@ -142,12 +147,12 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "SoldierNames",
 "language": "GDScript",
-"path": "res://assets/soldier_names/soldier_names.gd"
+"path": "res://assets/user_interface/soldier_names/soldier_names.gd"
 }, {
 "base": "Node",
 "class": "SoldierPotraits",
 "language": "GDScript",
-"path": "res://assets/soldier_potraits/soldier_potraits.gd"
+"path": "res://assets/user_interface/soldier_potraits/soldier_potraits.gd"
 }, {
 "base": "BaseData",
 "class": "TileMapData",
@@ -182,6 +187,7 @@ _global_script_class_icons={
 "BaseTileObject": "",
 "ClickableFloor": "",
 "ClickableScreen": "",
+"DragableCard": "",
 "InputEventMultiScreenDrag": "",
 "InputEventScreenPinch": "",
 "InputEventScreenTwist": "",

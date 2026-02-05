@@ -68,8 +68,8 @@ func update_navigation_tile(at :Vector2, enable :bool, _is_air :bool = false):
 			if i.id == at:
 				i.enable = enable
 				return
-			
-func get_closes_tile(from :Vector3) -> BaseTile:
+				
+func get_closes_tile_instance(from :Vector3) -> BaseTile:
 	var tiles :Array = get_tiles()
 	if tiles.empty():
 		return null
@@ -81,6 +81,23 @@ func get_closes_tile(from :Vector3) -> BaseTile:
 			
 		var dist_1 = current.translation.distance_squared_to(from)
 		var dist_2 = i.translation.distance_squared_to(from)
+		if dist_2 < dist_1:
+			current = i
+			
+	return current # BaseTile
+	
+func get_closes_tile(from :Vector3) -> TileMapData:
+	var tiles :Array = _tile_map_data.tiles
+	if tiles.empty():
+		return null
+		
+	var current :TileMapData = tiles[0]
+	for i in tiles:
+		if i == current:
+			continue
+			
+		var dist_1 = current.pos.distance_squared_to(from)
+		var dist_2 = i.pos.distance_squared_to(from)
 		if dist_2 < dist_1:
 			current = i
 			

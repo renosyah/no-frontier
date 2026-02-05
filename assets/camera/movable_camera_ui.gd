@@ -3,8 +3,8 @@ extends Control
 signal output
 
 var target :Spatial
-export var min_zoom :float = 5
-export var max_zoom :float = 20
+export var min_zoom :float = 3
+export var max_zoom :float = 10
 
 export var center_pos :Vector3 = Vector3(0, 0, 2)
 export(float) var limit_x = 3.0

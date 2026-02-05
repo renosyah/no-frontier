@@ -1,11 +1,100 @@
 extends Control
 
-signal screen_pressed
+signal on_update_tile
+signal on_add_object
+signal on_remove_object
 
-onready var movable_camera_ui = $CanvasLayer/Control/movable_camera_ui
+onready var movable_camera_ui = $CanvasLayer/movable_camera_ui
 
-func _on_clickable_screen_on_screen_clicked(pos):
-	var pos3 = Utils.screen_to_world(get_viewport().get_camera(), pos, false, 4)
-	print("on screen clicked %s and ray intersect : %s" % [pos, pos3])
-	$CanvasLayer/Sprite.position = pos
-	emit_signal("screen_pressed", pos3)
+onready var tile_options = [$CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/ground_tile, $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/water_tile, $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/object_forest]
+onready var map_options = [$CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/faction_base, $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/capture_point, $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/remove_object]
+onready var cards = [$CanvasLayer/Control/VBoxContainer/HBoxContainer3/ground_tile_card, $CanvasLayer/Control/VBoxContainer/HBoxContainer3/water_tile_card, $CanvasLayer/Control/VBoxContainer/HBoxContainer3/object_forest_card, $CanvasLayer/Control/VBoxContainer/HBoxContainer3/object_base_card, $CanvasLayer/Control/VBoxContainer/HBoxContainer3/object_capture_card, $CanvasLayer/Control/VBoxContainer/HBoxContainer3/object_remove_card]
+onready var floating_image_card = $CanvasLayer/floating_image_card
+
+func _ready():
+	for i in tile_options + map_options:
+		var btn : Button = i
+		btn.connect("pressed", self, "_on_toggle_button_pressed", [btn])
+		
+	for i in cards:
+		var card :DragableCard = i
+		var icon :StreamTexture = (card.get_child(1) as TextureRect).texture
+		card.connect("on_grab", self, "_on_card_grab", [icon])
+		card.connect("on_draging", self, "_on_card_grab_draging")
+		card.connect("on_release", self, "_on_card_grab_release")
+		card.connect("on_cancel", self, "_on_card_grab_cancel")
+		
+	hide_cards()
+	
+func on_card_release(id :int, at :Vector2):
+	match (id):
+		0:
+			update_tile_ground(at)
+		1:
+			update_tile_water(at)
+		2:
+			add_object_forest(at)
+		3:
+			add_object_base(at)
+		4:
+			add_object_capture(at)
+		5:
+			remove_object(at)
+		
+func update_tile_ground(at :Vector2):
+	var pos3 = Utils.screen_to_world(get_viewport().get_camera(), at, false, 4)
+	var data :TileMapData = TileMapData.new()
+	data.tile_type = 1
+	data.id = Vector2.ZERO
+	data.pos = pos3
+	
+	emit_signal("on_update_tile", data)
+	
+func update_tile_water(at :Vector2):
+	var pos3 = Utils.screen_to_world(get_viewport().get_camera(), at, false, 4)
+	var data :TileMapData = TileMapData.new()
+	data.tile_type = 2
+	data.id = Vector2.ZERO
+	data.pos = pos3
+	
+	emit_signal("on_update_tile", data)
+	
+func add_object_forest(at :Vector2):
+	pass
+func add_object_base(at :Vector2):
+	pass
+func add_object_capture(at :Vector2):
+	pass
+func remove_object(at :Vector2):
+	pass
+	
+	
+func untoggle_buttons(exc):
+	for i in tile_options + map_options:
+		if i != exc:
+			i.set_toggle_button(false)
+	
+func hide_cards(exc = null):
+	for i in cards:
+		i.visible = (exc == i)
+	
+func _on_toggle_button_pressed(btn):
+	untoggle_buttons(btn)
+	hide_cards(cards[btn.id])
+
+func _on_card_grab(card :DragableCard, pos :Vector2, icon :StreamTexture):
+	floating_image_card.texture = icon
+	floating_image_card.visible = true
+	floating_image_card.rect_position = pos
+	
+func _on_card_grab_draging(card :DragableCard, pos :Vector2):
+	floating_image_card.rect_position = pos
+	
+func _on_card_grab_release(card :DragableCard, pos :Vector2):
+	floating_image_card.visible = false
+	on_card_release(card.id, pos)
+	
+func _on_card_grab_cancel(card :DragableCard):
+	floating_image_card.visible = false
+
+

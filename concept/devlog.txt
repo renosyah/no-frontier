@@ -1,12 +1,13 @@
 editor : 
 	- required
 		- 3D asset grand tile land tile & water tile (done)
-		- 3D asset battle tile land tile, dirt tile, sand tile & water tile
-		- 3D asset small tree as forest
-		- 3D asset tree & rocks
+		- 3D asset battle tile land tile, dirt tile, sand tile & water tile (done)
+		- 3D asset small tree as forest (done)
+		- 3D asset tree & rocks (done)
+		- 3D asset base & capture point (done)
 
 	- grand map
-		- generate empty tiles or load from file
+		- generate empty tiles or load from file (done)
 		- drag and drop tile from ui to map
 		- enable & disable navigation
 		- edit tile -> enter battle map editor

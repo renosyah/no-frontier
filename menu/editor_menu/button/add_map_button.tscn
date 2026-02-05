@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://assets/fonts/montserrat_eb_32.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/user_interface/fonts/montserrat_eb_32.tres" type="DynamicFont" id=1]
 [ext_resource path="res://menu/editor_menu/button/add_map_button.gd" type="Script" id=2]
+
 
 [node name="add_map_button" type="MarginContainer"]
 margin_right = 145.0
