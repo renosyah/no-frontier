@@ -120,7 +120,7 @@ show_behind_parent = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-color = Color( 0, 0.384314, 0.0862745, 1 )
+color = Color( 0.109804, 0.258824, 0.141176, 1 )
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2"]
 anchor_left = 1.0

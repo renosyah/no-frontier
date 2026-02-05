@@ -26,7 +26,7 @@ static func generate_basic_tile_map(size :int, is_grand_map :bool = true) -> Til
 		var data :TileMapData = TileMapData.new()
 		data.tile_type = 1
 		data.id = id
-		data.pos = Vector3(id.x, 0, id.y) * 1.05
+		data.pos = Vector3(id.x, 0, id.y) * 1.02
 		tile_datas.append(data)
 		
 		var nav_id = tile_datas.size()
