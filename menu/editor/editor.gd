@@ -4,6 +4,7 @@ onready var ui = $ui
 onready var movable_camera = $movable_camera
 onready var grand_map = $grand_map
 onready var clickable_floor = $clickable_floor
+onready var selection = $selection
 
 func _ready():
 	ui.movable_camera_ui.target = movable_camera
@@ -31,6 +32,10 @@ func _notification(what):
 func on_back_pressed():
 	get_tree().change_scene("res://menu/editor_menu/editor_menu.tscn")
 
+func show_selection(at :Vector3,show :bool):
+	selection.visible = show
+	selection.translation = at
+
 func _on_clickable_floor_on_floor_clicked(pos):
 	pass
 
@@ -39,6 +44,7 @@ func _on_ui_on_update_tile(data :TileMapData):
 	data.id = old_tile.id
 	data.pos = old_tile.pos
 	grand_map.update_spawned_tile(data)
+	show_selection(old_tile.pos, false)
 	
 	if data.tile_type == 2:
 		grand_map.remove_spawned_object(data.id)
@@ -51,10 +57,16 @@ func _on_ui_on_add_object(data :MapObjectData):
 	data.id = tile.id
 	data.pos = tile.pos
 	grand_map.update_spawned_object(data)
+	show_selection(tile.pos, false)
 
 func _on_ui_on_remove_object(pos):
 	var tile = grand_map.get_closes_tile(pos)
 	grand_map.remove_spawned_object(tile.id)
+	show_selection(tile.pos, false)
+
+func _on_ui_on_card_dragging(pos):
+	var tile = grand_map.get_closes_tile(pos)
+	show_selection(tile.pos, true)
 
 
 

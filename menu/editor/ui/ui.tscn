@@ -28,7 +28,9 @@ script = ExtResource( 2 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="floating_image_card" type="TextureRect" parent="CanvasLayer"]
-rect_min_size = Vector2( 100, 100 )
+margin_right = 60.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 60, 60 )
 expand = true
 
 [node name="movable_camera_ui" parent="CanvasLayer" instance=ExtResource( 3 )]

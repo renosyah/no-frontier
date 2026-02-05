@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://menu/editor/editor.gd" type="Script" id=1]
 [ext_resource path="res://menu/editor/ui/ui.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://assets/camera/movable_camera.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/clickable_floor/clickable_floor.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/enviroment/enviroment.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/tile_highlight/selection.tscn" type="PackedScene" id=7]
 
 [node name="editor" type="Node"]
 script = ExtResource( 1 )
@@ -21,7 +22,11 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 2 )
 
 [node name="grand_map" parent="." instance=ExtResource( 3 )]
 
+[node name="selection" parent="." instance=ExtResource( 7 )]
+visible = false
+
 [connection signal="on_add_object" from="ui" to="." method="_on_ui_on_add_object"]
+[connection signal="on_card_dragging" from="ui" to="." method="_on_ui_on_card_dragging"]
 [connection signal="on_remove_object" from="ui" to="." method="_on_ui_on_remove_object"]
 [connection signal="on_update_tile" from="ui" to="." method="_on_ui_on_update_tile"]
 [connection signal="on_floor_clicked" from="clickable_floor" to="." method="_on_clickable_floor_on_floor_clicked"]

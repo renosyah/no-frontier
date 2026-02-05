@@ -1,5 +1,6 @@
 extends Control
 
+signal on_card_dragging
 signal on_update_tile
 signal on_add_object
 signal on_remove_object
@@ -114,6 +115,8 @@ func _on_card_grab(card :DragableCard, pos :Vector2, icon :StreamTexture):
 	
 func _on_card_grab_draging(card :DragableCard, pos :Vector2):
 	floating_image_card.rect_position = pos
+	var pos3 = Utils.screen_to_world(get_viewport().get_camera(), pos, false, 4)
+	emit_signal("on_card_dragging", pos3)
 	
 func _on_card_grab_release(card :DragableCard, pos :Vector2):
 	floating_image_card.visible = false
