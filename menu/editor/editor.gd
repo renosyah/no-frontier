@@ -10,11 +10,13 @@ onready var allow_nav = preload("res://assets/tile_highlight/allow_nav_material.
 onready var blocked_nav = preload("res://assets/tile_highlight/blocked_nav_material.tres")
 onready var nav_highlight_holder = {}
 
-onready var grand_map_data = EditorGlobal.grand_map_data
-onready var grand_map_mission_data = EditorGlobal.grand_map_mission_data
+onready var grand_map_data = Global.grand_map_data
+onready var grand_map_mission_data = Global.grand_map_mission_data
 
 func _ready():
 	ui.movable_camera_ui.target = movable_camera
+	ui.movable_camera_ui.center_pos = grand_map.global_position + Vector3(0, 0, 2)
+	ui.movable_camera_ui.camera_limit_bound = Global.camera_limit_bound
 	
 	get_tree().set_quit_on_go_back(false)
 	get_tree().set_auto_accept_quit(false)

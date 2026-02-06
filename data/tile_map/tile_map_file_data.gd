@@ -8,10 +8,8 @@ var objects : Array # [ MapObjectData ]
 var navigations : Array # [ NavigationData ]
 
 func from_dictionary(_data : Dictionary):
-	tile_ids = {} # { Vector2: int }
-	for key in _data["tile_ids"].keys():
-		tile_ids[key] = _data["tile_ids"][key]
-		
+	tile_ids = _data["tile_ids"].duplicate() # { Vector2: int }
+	
 	tiles = [] # [ TileMapData ]
 	for i in _data["tiles"]:
 		var x :TileMapData = TileMapData.new()
@@ -20,10 +18,8 @@ func from_dictionary(_data : Dictionary):
 		
 func to_dictionary() -> Dictionary :
 	var _data :Dictionary = {}
-	_data["tile_ids"] = {} # { Vector2: int }
-	for key in tile_ids.keys():
-		_data["tile_ids"][key] = tile_ids[key]
-		
+	_data["tile_ids"] = tile_ids.duplicate() # { Vector2: int }
+	
 	_data["tiles"] = [] # [ TileMapData ]
 	for i in tiles:
 		var x :TileMapData = i

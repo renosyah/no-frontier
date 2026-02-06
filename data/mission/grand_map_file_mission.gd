@@ -5,11 +5,11 @@ var bases :Array # [ Vector2 ]
 var points :Array # [ Vector2 ]
 
 func from_dictionary(_data : Dictionary):
-	bases = _data["bases"]
-	points = _data["points"]
+	bases = _data["bases"].duplicate()
+	points = _data["points"].duplicate()
 
 func to_dictionary() -> Dictionary :
 	var _data :Dictionary = {}
-	_data["bases"] = bases
-	_data["points"] = points
+	_data["bases"] = bases.duplicate()
+	_data["points"] = points.duplicate()
 	return _data

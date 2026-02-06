@@ -5,8 +5,7 @@ export var min_zoom :float = 3
 export var max_zoom :float = 10
 
 export var center_pos :Vector3 = Vector3(0, 0, 2)
-export(float) var limit_x = 3.0
-export(float) var limit_z = 2.0
+export var camera_limit_bound :Vector3  = Vector3(3, 0, 2)
 
 var move_speed := 0.018
 var zoom_speed := 0.02
@@ -36,8 +35,8 @@ func _unhandled_input(event):
 			target.translate(Vector3(-delta.x * adjusted_move_speed, 0, -delta.y * adjusted_move_speed))
 			
 			var pos = target.translation
-			pos.x = clamp(pos.x, center_pos.x - limit_x, center_pos.x + limit_x)
-			pos.z = clamp(pos.z, center_pos.z - limit_z, center_pos.z + limit_z)
+			pos.x = clamp(pos.x, center_pos.x - camera_limit_bound.x, center_pos.x + camera_limit_bound.x)
+			pos.z = clamp(pos.z, center_pos.z - camera_limit_bound.z, center_pos.z + camera_limit_bound.z)
 			target.translation = pos
 	
 		elif touches.size() == 2:

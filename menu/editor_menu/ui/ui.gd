@@ -3,7 +3,6 @@ extends Control
 const edit_map_button = preload("res://menu/editor_menu/button/edit_map_button.tscn")
 
 onready var grid_container = $CanvasLayer/Control/VBoxContainer/ScrollContainer/GridContainer
-
 onready var loaded_maps = []
 onready var loaded_maps_edit_buttons = []
 
@@ -52,5 +51,5 @@ func _loaded_maps_edit_button_pressed(map):
 	get_tree().change_scene("res://menu/editor/editor.tscn")
 	
 func _on_add_map_button_pressed():
-	EditorGlobal.empty_map_data()
+	Global.empty_map_data()
 	get_tree().change_scene("res://menu/editor/editor.tscn")

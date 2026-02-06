@@ -225,8 +225,10 @@ _global_script_class_icons={
 [application]
 
 config/name="No Frontier : Vietnam"
+config/description="is a real-time tactical war game set in the Vietnam War era."
 run/main_scene="res://menu/main/main.tscn"
 boot_splash/image="res://assets/background/bg.png"
+boot_splash/use_filter=false
 config/icon="res://icn.png"
 
 [autoload]
@@ -234,7 +236,6 @@ config/icon="res://icn.png"
 Network="*res://addons/network/Network.gd"
 NetworkLobbyManager="*res://addons/network/lobby-manager/NetworkLobbyManager.gd"
 Global="*res://global/global.gd"
-EditorGlobal="*res://global/editor_global.gd"
 
 [display]
 

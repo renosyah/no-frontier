@@ -36,7 +36,7 @@ func _ready():
 		card.connect("on_draging", self, "_on_card_grab_draging")
 		card.connect("on_release", self, "_on_card_grab_release")
 		card.connect("on_cancel", self, "_on_card_grab_cancel")
-
+	
 	hide_cards()
 	
 func on_card_release(id :int, at :Vector2):

@@ -14,10 +14,7 @@ func from_dictionary(_data : Dictionary):
 	map_image_file_path = _data["map_image_file_path"]
 	map_file_path = _data["map_file_path"]
 	mission_file_path = _data["mission_file_path"]
-	
-	battle_map_files = {}
-	for key in _data["battle_map_files"].keys():
-		battle_map_files[key] = _data["battle_map_files"][key]
+	battle_map_files = _data["battle_map_files"].duplicate()
 
 func to_dictionary() -> Dictionary :
 	var _data :Dictionary = {}
@@ -26,9 +23,5 @@ func to_dictionary() -> Dictionary :
 	_data["map_image_file_path"] = map_image_file_path
 	_data["map_file_path"] = map_file_path
 	_data["mission_file_path"] = mission_file_path
-	
-	_data["battle_map_files"] = {}
-	for key in battle_map_files.keys():
-		_data["battle_map_files"][key] = battle_map_files[key]
-		
+	_data["battle_map_files"] = battle_map_files.duplicate()
 	return _data

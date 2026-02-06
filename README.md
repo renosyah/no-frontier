@@ -3,7 +3,7 @@
 No frontier : Vietnam is a real-time tactical war game set in the Vietnam War era.
 It combines a strategic grand map with real-time tactical battles, both running on a single continuous timeline.
 
-<img src="https://raw.githubusercontent.com/renosyah/no-frontier/refs/heads/master/assets/background/bg.png" height="600" />
+<img src="https://raw.githubusercontent.com/renosyah/no-frontier/refs/heads/master/concept/bg.png" height="800" />
 
 ---
 
