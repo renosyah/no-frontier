@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
+[ext_resource path="res://assets/user_interface/icons/editor_menu_icon/grand_map.png" type="Texture" id=1]
 [ext_resource path="res://assets/user_interface/fonts/montserrat_eb_32.tres" type="DynamicFont" id=2]
 [ext_resource path="res://menu/editor_menu/button/edit_map_button.gd" type="Script" id=3]
 
@@ -19,8 +20,21 @@ rect_min_size = Vector2( 130, 125 )
 size_flags_horizontal = 8
 size_flags_vertical = 8
 custom_fonts/font = ExtResource( 2 )
-text = "M"
+flat = true
 icon_align = 1
 expand_icon = true
+
+[node name="ColorRect" type="ColorRect" parent="Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+
+[node name="TextureRect" type="TextureRect" parent="Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 1 )
+expand = true
 
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

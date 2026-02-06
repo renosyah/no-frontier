@@ -1,7 +1,5 @@
 extends Control
 
-signal output
-
 var target :Spatial
 export var min_zoom :float = 3
 export var max_zoom :float = 10

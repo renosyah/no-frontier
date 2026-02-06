@@ -2,9 +2,9 @@ extends Spatial
 class_name BaseTileMap
 
 signal on_map_ready
-signal on_tile_updated
-signal on_object_updated
-signal on_navigation_updated
+signal on_tile_updated(id, data, node)
+signal on_object_updated(id, data, node)
+signal on_navigation_updated(id, data, nav)
 
 var _click_position :Vector3
 var _spawned_tiles :Dictionary = {} # { Vector2 : BaseTile }
@@ -40,15 +40,8 @@ func has_tile(id :Vector2) -> bool:
 func get_tile(id :Vector2) -> BaseTile:
 	return _spawned_tiles[id] # Tile
 	
-func is_navigation_enable(id :Vector2) -> bool:
-	var nav_id :int = _tile_map_data.tile_ids[id]
-	if not _navigation.has_point(nav_id):
-		return false
-		
-	return not _navigation.is_point_disabled(nav_id)
-	
 func update_spawned_object(data :MapObjectData):
-	remove_spawned_object(data.id)
+	remove_spawned_object(data.id, false)
 	
 	# spawn new
 	var obj :BaseTileObject = _spawn_object(data)
@@ -58,8 +51,10 @@ func update_spawned_object(data :MapObjectData):
 	# update to _tile_map_data
 	if _is_editor:
 		_tile_map_data.objects.append(data)
+		
+	emit_signal("on_object_updated", data.id, data, obj)
 	
-func remove_spawned_object(id :Vector2):
+func remove_spawned_object(id :Vector2, update :bool = true):
 	if _spawned_objects.has(id):
 		var _spawned_obj :BaseTileObject = _spawned_objects[id]
 		_spawned_obj.queue_free()
@@ -76,7 +71,8 @@ func remove_spawned_object(id :Vector2):
 				
 			pos += 1
 			
-	emit_signal("on_object_updated", id)
+	if update:
+		emit_signal("on_object_updated", id, null, null)
 	
 func update_spawned_tile(data :TileMapData):
 	var _spawned_tile :BaseTile = _spawned_tiles[data.id]
@@ -101,19 +97,25 @@ func update_spawned_tile(data :TileMapData):
 				
 			pos += 1
 			
-	emit_signal("on_tile_updated", data.id)
+	emit_signal("on_tile_updated", data.id, data, tile)
 	
 func update_navigation_tile(at :Vector2, enable :bool, _is_air :bool = false):
 	var _nav :AStar2D = _air_navigation if _is_air else _navigation
 	_enable_nav_tile(_nav, at, enable)
 	
+	var nav_data :NavigationData
+	for i in _tile_map_data.navigations:
+		if i.id == at:
+			nav_data = i
+			break
+	
+	if not nav_data:
+		return
+		
 	if _is_editor:
-		for i in _tile_map_data.navigations:
-			if i.id == at:
-				i.enable = enable
-				break
-				
-	emit_signal("on_navigation_updated", at)
+		nav_data.enable = enable
+		
+	emit_signal("on_navigation_updated", at, nav_data)
 	
 func get_closes_tile_instance(from :Vector3) -> BaseTile:
 	var tiles :Array = get_tiles()
@@ -165,7 +167,7 @@ func _spawn_tiles():
 		var data :TileMapData = i
 		_spawned_tiles[data.id] = _spawn_tile(data)
 	
-func _spawn_tile(data :TileMapData) -> BaseTile:
+func _spawn_tile(_data :TileMapData) -> BaseTile:
 	# TODO
 	# overide this function to spawn tiles
 	# then return spawn tile instance
@@ -176,7 +178,7 @@ func _spawn_objects():
 		var data :MapObjectData = i
 		_spawned_objects[data.id] = _spawn_object(data)
 	
-func _spawn_object(data :MapObjectData) -> BaseTileObject:
+func _spawn_object(_data :MapObjectData) -> BaseTileObject:
 	# TODO
 	# overide this function to spawn object
 	return null

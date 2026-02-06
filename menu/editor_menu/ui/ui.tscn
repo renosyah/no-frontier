@@ -8,7 +8,6 @@
 [ext_resource path="res://assets/user_interface/fonts/montserrat_eb_32.tres" type="DynamicFont" id=6]
 [ext_resource path="res://menu/editor_menu/button/add_map_button.tscn" type="PackedScene" id=8]
 
-
 [node name="ui" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0

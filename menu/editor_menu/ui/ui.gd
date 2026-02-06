@@ -15,7 +15,9 @@ func _ready():
 	_show_maps()
 	
 func _load_maps():
-	loaded_maps.append(1)
+	# load maps from disk
+	# added it to array of loaded_maps
+	pass
 	
 func _show_maps():
 	for i in loaded_maps_edit_buttons:
@@ -24,7 +26,7 @@ func _show_maps():
 	
 	for i in loaded_maps:
 		var loaded_maps_edit_button = edit_map_button.instance()
-		loaded_maps_edit_button.connect("pressed", self, "_loaded_maps_edit_button_pressed")
+		loaded_maps_edit_button.connect("pressed", self, "_loaded_maps_edit_button_pressed", [i])
 		grid_container.add_child(loaded_maps_edit_button)
 		grid_container.move_child(loaded_maps_edit_button, 0)
 		loaded_maps_edit_buttons.append(loaded_maps_edit_button)
@@ -45,8 +47,10 @@ func on_back_pressed():
 func _on_back_pressed():
 	on_back_pressed()
 	
-func _loaded_maps_edit_button_pressed():
+func _loaded_maps_edit_button_pressed(map):
+	# set map to EditorGlobal map data
 	get_tree().change_scene("res://menu/editor/editor.tscn")
 	
 func _on_add_map_button_pressed():
+	EditorGlobal.empty_map_data()
 	get_tree().change_scene("res://menu/editor/editor.tscn")

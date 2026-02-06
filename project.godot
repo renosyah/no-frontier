@@ -50,6 +50,11 @@ _global_script_classes=[ {
 "path": "res://menu/editor/ui/dragable_card/dragable_card.gd"
 }, {
 "base": "BaseData",
+"class": "GrandMapFileManifest",
+"language": "GDScript",
+"path": "res://data/manifest/grand_map_file_manifest.gd"
+}, {
+"base": "BaseData",
 "class": "GrandMapFileMission",
 "language": "GDScript",
 "path": "res://data/mission/grand_map_file_mission.gd"
@@ -169,11 +174,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://data/tile_map/tile_map_file_data.gd"
 }, {
-"base": "BaseData",
-"class": "TileMapFileManifest",
-"language": "GDScript",
-"path": "res://data/tile_map/tile_map_file_manifest.gd"
-}, {
 "base": "Node",
 "class": "TileMapUtils",
 "language": "GDScript",
@@ -193,6 +193,7 @@ _global_script_class_icons={
 "ClickableFloor": "",
 "ClickableScreen": "",
 "DragableCard": "",
+"GrandMapFileManifest": "",
 "GrandMapFileMission": "",
 "InputEventMultiScreenDrag": "",
 "InputEventScreenPinch": "",
@@ -217,7 +218,6 @@ _global_script_class_icons={
 "SoldierPotraits": "",
 "TileMapData": "",
 "TileMapFileData": "",
-"TileMapFileManifest": "",
 "TileMapUtils": "",
 "Utils": ""
 }
@@ -234,6 +234,7 @@ config/icon="res://icn.png"
 Network="*res://addons/network/Network.gd"
 NetworkLobbyManager="*res://addons/network/lobby-manager/NetworkLobbyManager.gd"
 Global="*res://global/global.gd"
+EditorGlobal="*res://global/editor_global.gd"
 
 [display]
 

@@ -14,7 +14,7 @@ const DIAGONAL_DIRECTIONS = [
 ]
 
 static func generate_basic_tile_map(size :int, is_grand_map :bool = true) -> TileMapFileData:
-	var tiles = get_adjacent_tiles(get_directions(), Vector2.ZERO, 2)
+	var tiles = get_adjacent_tiles(get_directions(), Vector2.ZERO, size)
 	tiles.push_front(Vector2.ZERO)
 	
 	var tile_datas = []
@@ -96,7 +96,7 @@ static func get_adjacent_tiles(directions :Array, from: Vector2 = Vector2.ZERO, 
 	var frontier := [from]
 	visited[from] = true
 	
-	for step in range(radius):
+	for _step in range(radius):
 		var next_frontier := []
 		for current in frontier:
 			for dir in directions:

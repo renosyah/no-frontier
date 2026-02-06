@@ -1,8 +1,7 @@
 extends BaseData
 class_name GrandMapFileMission
 
-# 1 = us macv base, # 2 nva base
-var bases :Dictionary # { Vector2: int }
+var bases :Array # [ Vector2 ]
 var points :Array # [ Vector2 ]
 
 func from_dictionary(_data : Dictionary):
