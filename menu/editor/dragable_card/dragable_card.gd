@@ -6,8 +6,6 @@ signal on_draging
 signal on_release
 signal on_cancel
 
-export var id:int = 0
-
 var _dragging = false
 var _drag_offset = Vector2()
 var _drag_pos = Vector2()

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/macv.png-cb0cc9f0a175ab3b251a5cccead122cf.stex"
+path="res://.import/insurgent.png-f88a02b8c8e2de207c10633446cf0292.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/user_interface/icons/squad/macv.png"
-dest_files=[ "res://.import/macv.png-cb0cc9f0a175ab3b251a5cccead122cf.stex" ]
+source_file="res://assets/user_interface/icons/floating_icon/insurgent.png"
+dest_files=[ "res://.import/insurgent.png-f88a02b8c8e2de207c10633446cf0292.stex" ]
 
 [params]
 

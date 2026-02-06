@@ -47,7 +47,7 @@ _global_script_classes=[ {
 "base": "MarginContainer",
 "class": "DragableCard",
 "language": "GDScript",
-"path": "res://menu/editor/ui/dragable_card/dragable_card.gd"
+"path": "res://menu/editor/dragable_card/dragable_card.gd"
 }, {
 "base": "BaseData",
 "class": "GrandMapFileManifest",

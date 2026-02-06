@@ -2,11 +2,11 @@ extends BaseData
 class_name GrandMapFileManifest
 
 var map_name :String
-var map_size :Vector2
+var map_size :int
 var map_image_file_path :String
 var map_file_path :String
 var mission_file_path :String
-var battle_map_files :Dictionary = {} # { Vector2 : String }
+var battle_map_files :Dictionary # { Vector2 : String }
 
 func from_dictionary(_data : Dictionary):
 	map_name = _data["map_name"]

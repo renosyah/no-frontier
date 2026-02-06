@@ -13,6 +13,12 @@ const DIAGONAL_DIRECTIONS = [
 	Vector2.DOWN + Vector2.RIGHT,
 ]
 
+# size is range of tile map
+# for example : 
+# 2 → 5 × 5
+# 4 → 9 × 9
+# 6 → 13 × 13
+# 8 → 17 × 17
 static func generate_basic_tile_map(size :int, is_grand_map :bool = true) -> TileMapFileData:
 	var tiles = get_adjacent_tiles(get_directions(), Vector2.ZERO, size)
 	tiles.push_front(Vector2.ZERO)

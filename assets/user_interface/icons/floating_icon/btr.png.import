@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/nva.png-8a2690fe6b93d71f284bf52c8f1ad36d.stex"
+path="res://.import/btr.png-e8090ec2abb35400e923897349264ea0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/user_interface/icons/squad/nva.png"
-dest_files=[ "res://.import/nva.png-8a2690fe6b93d71f284bf52c8f1ad36d.stex" ]
+source_file="res://assets/user_interface/icons/floating_icon/btr.png"
+dest_files=[ "res://.import/btr.png-e8090ec2abb35400e923897349264ea0.stex" ]
 
 [params]
 

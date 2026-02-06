@@ -1,7 +1,6 @@
 tool
 extends Button
 
-export var id:int
 export var button_image :StreamTexture setget set_button_image
 export var button_color: Color = Color(0, 0, 0)
 export var button_color_toggle :Color = Color(0.230469, 0.230469, 0.230469)

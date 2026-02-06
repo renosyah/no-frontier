@@ -5,11 +5,14 @@ onready var movable_camera_custom = $movable_camera_custom
 onready var grand_map = $grand_map
 onready var clickable_floor = $clickable_floor
 onready var selection = $selection
+onready var enviroment = $enviroment
+onready var border = $border
 
 onready var allow_nav = preload("res://assets/tile_highlight/allow_nav_material.tres")
 onready var blocked_nav = preload("res://assets/tile_highlight/blocked_nav_material.tres")
 onready var nav_highlight_holder = {}
 
+onready var grand_map_manifest_data = Global.grand_map_manifest_data
 onready var grand_map_data = Global.grand_map_data
 onready var grand_map_mission_data = Global.grand_map_mission_data
 
@@ -18,13 +21,18 @@ func _ready():
 	ui.movable_camera_ui.center_pos = grand_map.global_position + Vector3(0, 0, 2)
 	ui.movable_camera_ui.camera_limit_bound = Global.camera_limit_bound
 	
+	ui.map_name.text = grand_map_manifest_data.map_name
+	border.scale = Vector3.ONE * ((grand_map_manifest_data.map_size * 2) + 1.4)
+	
 	get_tree().set_quit_on_go_back(false)
 	get_tree().set_auto_accept_quit(false)
 	
 	grand_map.generate_from_data(grand_map_data, true)
 	
 func _process(_delta):
-	clickable_floor.translation = movable_camera_custom.translation * Vector3(1,0,1)
+	var cam_pos = movable_camera_custom.translation
+	enviroment.cam_pos = cam_pos
+	clickable_floor.translation = cam_pos * Vector3(1,0,1)
 
 func _notification(what):
 	match what:
@@ -143,3 +151,8 @@ func _on_ui_on_zoom_tile(pos):
 	show_selection(Vector3.ZERO, false)
 	var tile = grand_map.get_closes_tile(pos)
 	print("zoom in to : %s" % tile.to_dictionary())
+
+func _on_ui_on_save():
+	# save some shit
+	grand_map_manifest_data.map_name = ui.map_name.text
+	on_back_pressed()
