@@ -1,7 +1,7 @@
 extends Node
 
 onready var ui = $ui
-onready var movable_camera = $movable_camera
+onready var movable_camera_custom = $movable_camera_custom
 onready var grand_map = $grand_map
 onready var clickable_floor = $clickable_floor
 onready var selection = $selection
@@ -14,7 +14,7 @@ onready var grand_map_data = Global.grand_map_data
 onready var grand_map_mission_data = Global.grand_map_mission_data
 
 func _ready():
-	ui.movable_camera_ui.target = movable_camera
+	ui.movable_camera_ui.target = movable_camera_custom
 	ui.movable_camera_ui.center_pos = grand_map.global_position + Vector3(0, 0, 2)
 	ui.movable_camera_ui.camera_limit_bound = Global.camera_limit_bound
 	
@@ -24,7 +24,7 @@ func _ready():
 	grand_map.generate_from_data(grand_map_data, true)
 	
 func _process(_delta):
-	clickable_floor.translation = movable_camera.translation * Vector3(1,0,1)
+	clickable_floor.translation = movable_camera_custom.translation * Vector3(1,0,1)
 
 func _notification(what):
 	match what:
@@ -60,8 +60,10 @@ func _on_ui_on_update_tile(data :TileMapData):
 
 func _on_ui_on_add_object(data :MapObjectData):
 	show_selection(Vector3.ZERO, false)
+	
 	var tile = grand_map.get_closes_tile(data.pos)
-	if tile.tile_type == 2:
+	var obj = grand_map.get_object(tile.id)
+	if tile.tile_type == 2 or is_instance_valid(obj):
 		return
 		
 	data.id = tile.id
@@ -69,23 +71,40 @@ func _on_ui_on_add_object(data :MapObjectData):
 	grand_map.update_spawned_object(data)
 
 func _on_ui_on_add_point(data :MapObjectData):
-	if grand_map_mission_data.points.size() > 3:
-		show_selection(Vector3.ZERO, false)
+	show_selection(Vector3.ZERO, false)
+	
+	# must get id from tile!!
+	var tile = grand_map.get_closes_tile(data.pos)
+	var obj = grand_map.get_object(tile.id)
+	var has_max = grand_map_mission_data.points.size() > 2
+	if is_instance_valid(obj) or has_max or tile.tile_type == 2:
 		return
 		
-	_on_ui_on_add_object(data)
+	data.id = tile.id
+	data.pos = tile.pos
+	grand_map.update_spawned_object(data)
+	
 	grand_map_mission_data.points.append(data.id)
 	
 func _on_ui_on_add_base(data :MapObjectData):
-	if grand_map_mission_data.bases.size() > 1:
-		show_selection(Vector3.ZERO, false)
+	show_selection(Vector3.ZERO, false)
+	
+	# must get id from tile!!
+	var tile = grand_map.get_closes_tile(data.pos)
+	var obj = grand_map.get_object(tile.id)
+	var has_max = grand_map_mission_data.bases.size() > 1
+	if is_instance_valid(obj) or has_max or tile.tile_type == 2:
 		return
-		
-	_on_ui_on_add_object(data)
+	
+	data.id = tile.id
+	data.pos = tile.pos
+	grand_map.update_spawned_object(data)
+	
 	grand_map_mission_data.bases.append(data.id)
 	
 func _on_ui_on_remove_object(pos):
 	show_selection(Vector3.ZERO, false)
+	
 	var tile = grand_map.get_closes_tile(pos)
 	grand_map.remove_spawned_object(tile.id)
 	

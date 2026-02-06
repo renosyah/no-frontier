@@ -127,18 +127,21 @@ func _on_toggle_button_pressed(btn):
 	hide_cards(cards[btn.id])
 	
 func _on_card_grab(_card :DragableCard, pos :Vector2, icon :StreamTexture):
+	var pos2 = pos # - floating_image_card.rect_pivot_offset
 	floating_image_card.texture = icon
 	floating_image_card.visible = true
-	floating_image_card.rect_position = pos + floating_image_card.rect_pivot_offset
+	floating_image_card.rect_position = pos2
 	
 func _on_card_grab_draging(_card :DragableCard, pos :Vector2):
-	floating_image_card.rect_position = pos + floating_image_card.rect_pivot_offset
-	var pos3 = Utils.screen_to_world(get_viewport().get_camera(), pos, false, 4)
+	var pos2 = pos # - floating_image_card.rect_pivot_offset
+	floating_image_card.rect_position = pos2
+	var pos3 = Utils.screen_to_world(get_viewport().get_camera(), pos2, false, 4)
 	emit_signal("on_card_dragging", pos3)
 	
 func _on_card_grab_release(card :DragableCard, pos :Vector2):
 	floating_image_card.visible = false
-	on_card_release(card.id, pos)
+	var pos2 = pos # - floating_image_card.rect_pivot_offset
+	on_card_release(card.id, pos2)
 	
 func _on_card_grab_cancel(_card :DragableCard):
 	floating_image_card.visible = false

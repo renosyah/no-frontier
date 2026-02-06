@@ -29,10 +29,11 @@ script = ExtResource( 2 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="floating_image_card" type="TextureRect" parent="CanvasLayer"]
+modulate = Color( 1, 1, 1, 0.5 )
 margin_right = 60.0
 margin_bottom = 60.0
-rect_min_size = Vector2( 60, 60 )
-rect_pivot_offset = Vector2( 30, 30 )
+rect_min_size = Vector2( 100, 100 )
+rect_pivot_offset = Vector2( 50, 50 )
 expand = true
 
 [node name="movable_camera_ui" parent="CanvasLayer" instance=ExtResource( 3 )]

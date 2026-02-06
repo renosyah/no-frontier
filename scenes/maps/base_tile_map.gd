@@ -38,7 +38,16 @@ func has_tile(id :Vector2) -> bool:
 	return _spawned_tiles.has(id)
 	
 func get_tile(id :Vector2) -> BaseTile:
+	if not _spawned_tiles.has(id):
+		return null
+		
 	return _spawned_tiles[id] # Tile
+	
+func get_object(id :Vector2) -> BaseTileObject:
+	if not _spawned_objects.has(id):
+		return null
+		
+	return _spawned_objects[id] # TileObject
 	
 func update_spawned_object(data :MapObjectData):
 	remove_spawned_object(data.id, false)
