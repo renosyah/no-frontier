@@ -1,8 +1,8 @@
 extends Control
 
 var target :Spatial
-export var min_zoom :float = 3
-export var max_zoom :float = 10
+export var min_zoom :float = 1
+export var max_zoom :float = 6
 
 export var center_pos :Vector3 = Vector3(0, 0, 2)
 export var camera_limit_bound :Vector3  = Vector3(3, 0, 2)

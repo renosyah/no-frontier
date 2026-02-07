@@ -11,10 +11,6 @@ signal on_toggle_nav
 signal on_zoom_tile
 signal on_save
 
-const forests = [
-	preload("res://scenes/tile_objects/grand/forest_1.tscn"),
-	preload("res://scenes/tile_objects/grand/forest_2.tscn")
-]
 onready var control = $CanvasLayer/Control
 onready var movable_camera_ui = $CanvasLayer/movable_camera_ui
 onready var tile_options = [$CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/ground_tile, $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/water_tile, $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/object_forest]
@@ -28,6 +24,7 @@ onready var zoom_in_card = $CanvasLayer/Control/VBoxContainer/HBoxContainer3/zoo
 onready var map_name = $CanvasLayer/Control/VBoxContainer/HBoxContainer/ColorRect/map_name
 onready var base_qty = $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/faction_base/Label
 onready var point_qty = $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/capture_point/Label2
+onready var save_button = $CanvasLayer/Control/VBoxContainer/HBoxContainer/save_button
 
 func _ready():
 	var card_idx = 0
@@ -61,9 +58,9 @@ func on_card_release(card :DragableCard, at :Vector2):
 	elif card == cards[1]:
 		update_tile_water(at)
 	elif card == cards[2]:
-		add_object_forest(at, forests[0])
+		add_object_forest(at, 2)
 	elif card == cards[3]:
-		add_object_forest(at, forests[1])
+		add_object_forest(at, 3)
 	elif card == cards[4]:
 		add_object_base(at)
 	elif card == cards[5]:
@@ -87,12 +84,12 @@ func update_tile_water(at :Vector2):
 	
 	emit_signal("on_update_tile", data)
 	
-func add_object_forest(at :Vector2,scene :Resource):
+func add_object_forest(at :Vector2,scene_idx :int):
 	var pos3 = Utils.screen_to_world(get_viewport().get_camera(), at, false, 4)
 	var data :MapObjectData = MapObjectData.new()
 	data.id = Vector2.ZERO
 	data.pos = pos3
-	data.scene = scene
+	data.scene_idx = scene_idx
 	data.is_blocking = false
 	
 	emit_signal("on_add_object", data)
@@ -102,7 +99,7 @@ func add_object_base(at :Vector2):
 	var data :MapObjectData = MapObjectData.new()
 	data.id = Vector2.ZERO
 	data.pos = pos3
-	data.scene = preload("res://scenes/tile_objects/grand/faction_base.tscn")
+	data.scene_idx = 0
 	data.is_blocking = false
 	
 	emit_signal("on_add_base", data)
@@ -112,7 +109,7 @@ func add_object_capture(at :Vector2):
 	var data :MapObjectData = MapObjectData.new()
 	data.id = Vector2.ZERO
 	data.pos = pos3
-	data.scene = preload("res://scenes/tile_objects/grand/flag_pole.tscn")
+	data.scene_idx = 1
 	data.is_blocking = false
 	
 	emit_signal("on_add_point", data)

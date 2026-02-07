@@ -23,6 +23,14 @@ static func load_save(_filename : String, use_prefix = true):
 		file.close()
 		return _data
 	return null
+	
+static func ensure_dir(path: String) -> void:
+	var dir = Directory.new()
+	
+	if not dir.dir_exists(path):
+		var err = dir.make_dir_recursive(path)
+		if err != OK:
+			push_error("Failed to create directory: " + path)
 
 static func delete_save(_filename : String, use_prefix = true):
 	var dir = Directory.new()

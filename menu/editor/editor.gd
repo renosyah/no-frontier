@@ -7,6 +7,7 @@ onready var clickable_floor = $clickable_floor
 onready var selection = $selection
 onready var enviroment = $enviroment
 onready var border = $border
+onready var camera = $movable_camera_custom/Camera
 
 onready var allow_nav = preload("res://assets/tile_highlight/allow_nav_material.tres")
 onready var blocked_nav = preload("res://assets/tile_highlight/blocked_nav_material.tres")
@@ -20,6 +21,7 @@ func _ready():
 	ui.movable_camera_ui.target = movable_camera_custom
 	ui.movable_camera_ui.center_pos = grand_map.global_position + Vector3(0, 0, 2)
 	ui.movable_camera_ui.camera_limit_bound = Global.camera_limit_bound
+	ui.save_button.visible = false
 	
 	ui.map_name.text = grand_map_manifest_data.map_name
 	update_base_point_quota()
@@ -29,11 +31,13 @@ func _ready():
 	get_tree().set_quit_on_go_back(false)
 	get_tree().set_auto_accept_quit(false)
 	
+	camera.environment = preload("res://assets/enviroment/room_environment.tres")
+	
 	grand_map.generate_from_data(grand_map_data, true)
 	
 func _process(_delta):
 	var cam_pos = movable_camera_custom.translation
-	enviroment.cam_pos = cam_pos
+	enviroment.translation = cam_pos + Vector3(0,0, -2)
 	clickable_floor.translation = cam_pos * Vector3(1,0,1)
 
 func _notification(what):
@@ -50,8 +54,11 @@ func on_back_pressed():
 	get_tree().change_scene("res://menu/editor_menu/editor_menu.tscn")
 
 func update_base_point_quota():
-	ui.base_qty.text = "%s" % (2 - grand_map_mission_data.bases.size())
-	ui.point_qty.text = "%s" % (3 - grand_map_mission_data.points.size())
+	var base_qty = 2 - grand_map_mission_data.bases.size()
+	var point_qty = 3 - grand_map_mission_data.points.size()
+	ui.base_qty.text = "%s" % base_qty
+	ui.point_qty.text = "%s" % point_qty
+	ui.save_button.visible = base_qty == 0 and point_qty < 3
 
 func show_selection(at :Vector3,show :bool):
 	selection.visible = show
@@ -151,6 +158,8 @@ func _on_grand_map_on_navigation_updated(id :Vector2, data :NavigationData):
 	nav_highlight_holder[id].set_surface_material(0, allow_nav if data.enable else blocked_nav)
 	
 func _on_grand_map_on_map_ready():
+	Global.hide_transition()
+	
 	for i in grand_map_data.navigations:
 		var nav :NavigationData = i
 		var nav_highlight = preload("res://assets/tile_highlight/nav_highlight.tscn").instance()
@@ -170,24 +179,27 @@ func _on_ui_on_zoom_tile(pos):
 	var tile = grand_map.get_closes_tile(pos)
 	print("zoom in to : %s" % tile.to_dictionary())
 	
-func _save_mission(map_name :String) -> String:
+func _save_mission() -> String:
+	var map_name = grand_map_manifest_data.map_name
 	var file_path = "user://%s/%s.mission" % [Global.map_dir,map_name]
 	Global.save_map(file_path, grand_map_mission_data.to_dictionary(), false)
 	yield(Global.save_load_map,"save_done")
 	return file_path
 	
-func _save_map(map_name :String) -> String:
+func _save_map() -> String:
+	var map_name = grand_map_manifest_data.map_name
 	var file_path = "user://%s/%s.map" % [Global.map_dir, map_name]
 	Global.save_map(file_path, grand_map_data.to_dictionary(), false)
 	yield(Global.save_load_map,"save_done")
 	return file_path
 	
-func _save_manifest(map_name :String, map_file:String, mission_file:String):
+func _save_manifest( map_file:String, mission_file:String):
+	var map_name = grand_map_manifest_data.map_name
 	var file_path = "user://%s/%s.manifest" % [Global.map_dir, map_name]
-	var img_path = yield(Global.save_ss(map_name), "completed")
 	
-	grand_map_manifest_data.map_name = map_name
+	var img_path = yield(Global.save_ss(map_name), "completed")
 	grand_map_manifest_data.map_image_file_path = img_path
+	
 	grand_map_manifest_data.map_file_path = map_file
 	grand_map_manifest_data.mission_file_path = mission_file
 	grand_map_manifest_data.battle_map_files = {} # todo
@@ -195,17 +207,13 @@ func _save_manifest(map_name :String, map_file:String, mission_file:String):
 	SaveLoad.save(file_path, grand_map_manifest_data.to_dictionary(), false)
 	
 func _on_ui_on_save():
-	var map_name :String = ui.map_name.text
-	if map_name.empty():
-		return
-		
 	ui.set_visible(false)
 	movable_camera_custom.translation = Vector3(0, 5, 2)
 	yield(get_tree().create_timer(0.6),"timeout")
 	
-	var map_file = yield(_save_map(map_name),"completed")
-	var mission_file = yield(_save_mission(map_name),"completed")
-	yield(_save_manifest(map_name,map_file,mission_file),"completed")
+	var map_file = yield(_save_map(),"completed")
+	var mission_file = yield(_save_mission(),"completed")
+	yield(_save_manifest(map_file, mission_file),"completed")
 	
 	on_back_pressed()
 

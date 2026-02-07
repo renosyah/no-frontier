@@ -18,11 +18,11 @@ func on_back_pressed():
 	get_tree().quit()
 	
 func _on_editor_pressed():
-	get_tree().change_scene("res://menu/editor_menu/editor_menu.tscn")
+	Global.change_scene("res://menu/editor_menu/editor_menu.tscn")
 
 
 func _on_play_pressed():
-	get_tree().change_scene("res://menu/lobby/lobby.tscn")
+	Global.change_scene("res://menu/lobby/lobby.tscn", true, 2)
 
 
 

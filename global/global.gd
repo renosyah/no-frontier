@@ -1,11 +1,22 @@
 extends Node
 
-signal map_loaded
-signal map_saved
-
 func _ready():
+	SaveLoad.ensure_dir("user://%s/" % map_dir)
 	_init_save_load_map()
+	_setup_transition()
 	
+##########################################  transisiion  ############################################
+var transition :CanvasLayer
+
+func _setup_transition():
+	transition = preload("res://assets/transision_screen/transision_screen.tscn").instance()
+	add_child(transition)
+	
+func change_scene(scene :String, use :bool = false, bg_idx :int = 1):
+	transition.change_scene(scene, use, bg_idx)
+	
+func hide_transition():
+	transition.hide_transition()
 ##########################################  camera strict  ############################################
 
 onready var camera_limit_bound = Vector3(3, 0, 2)

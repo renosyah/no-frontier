@@ -1,33 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene format=2]
 
-[ext_resource path="res://assets/enviroment/room_enviroment.gd" type="Script" id=1]
-
-[sub_resource type="ProceduralSky" id=2]
-radiance_size = 0
-sky_top_color = Color( 0.458824, 0.490196, 0.501961, 1 )
-sky_horizon_color = Color( 0.231373, 0.352941, 0.231373, 1 )
-ground_bottom_color = Color( 0.117647, 0.117647, 0.117647, 1 )
-ground_horizon_color = Color( 0.188235, 0.188235, 0.188235, 1 )
-texture_size = 0
-
-[sub_resource type="Environment" id=1]
-background_mode = 2
-background_sky = SubResource( 2 )
-fog_enabled = true
-fog_color = Color( 0.152941, 0.47451, 0.792157, 1 )
-fog_sun_color = Color( 1, 0.901961, 0.701961, 1 )
-fog_depth_curve = 0.637279
-dof_blur_far_distance = 5.0
-dof_blur_far_amount = 0.2
-dof_blur_far_quality = 0
-
-[node name="room_enviroment" type="Node"]
-script = ExtResource( 1 )
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 1 )
+[node name="room_enviroment" type="Spatial"]
 
 [node name="SpotLight" type="SpotLight" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 3, 0 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
+light_energy = 1.6
+shadow_enabled = true
+shadow_bias = 0.12
 spot_range = 10.0
-spot_angle = 60.0
+spot_angle = 55.0

@@ -37,7 +37,7 @@ func _notification(what):
 			return
 			
 func on_back_pressed():
-	get_tree().change_scene("res://menu/main/main.tscn")
+	Global.change_scene("res://menu/main/main.tscn")
 
 func _on_back_pressed():
 	on_back_pressed()
@@ -57,8 +57,8 @@ func _loaded_maps_edit_button_pressed(manif :GrandMapFileManifest):
 	
 	Global.battle_map_datas = {} # todo
 
-	get_tree().change_scene("res://menu/editor/editor.tscn")
+	Global.change_scene("res://menu/editor/editor.tscn", true, 0)
 	
 func _on_add_map_button_pressed():
 	Global.empty_map_data()
-	get_tree().change_scene("res://menu/editor/editor.tscn")
+	Global.change_scene("res://menu/editor/editor.tscn", true, 0)
