@@ -54,11 +54,11 @@ func on_back_pressed():
 	get_tree().change_scene("res://menu/editor_menu/editor_menu.tscn")
 
 func update_base_point_quota():
-	var base_qty = 2 - grand_map_mission_data.bases.size()
-	var point_qty = 3 - grand_map_mission_data.points.size()
-	ui.base_qty.text = "%s" % base_qty
-	ui.point_qty.text = "%s" % point_qty
-	ui.save_button.visible = base_qty == 0 and point_qty < 3
+	var base_qty = grand_map_mission_data.bases.size()
+	var point_qty = grand_map_mission_data.points.size()
+	ui.base_qty.text = "%s" %  (2 - base_qty)
+	ui.point_qty.text = "%s" % (3 - point_qty)
+	ui.save_button.visible = (base_qty >= Global.req_base_count) and (point_qty >= Global.req_point_count)
 
 func show_selection(at :Vector3,show :bool):
 	selection.visible = show
@@ -74,9 +74,12 @@ func _on_ui_on_update_tile(data :TileMapData):
 	grand_map.update_spawned_tile(data)
 	show_selection(old_tile.pos, false)
 	
-	grand_map.update_navigation_tile(data.id, data.tile_type == 1)
+	if data.tile_type == 1:
+		grand_map.update_navigation_tile(data.id, true)
+		Global.battle_map_datas[data.id] = TileMapUtils.generate_basic_tile_map(Global.battle_map_size, false)
 	
-	if data.tile_type == 2:
+	elif data.tile_type == 2:
+		grand_map.update_navigation_tile(data.id, false)
 		grand_map.remove_spawned_object(data.id)
 		
 		if grand_map_mission_data.bases.has(data.id):
@@ -105,7 +108,7 @@ func _on_ui_on_add_point(data :MapObjectData):
 	# must get id from tile!!
 	var tile = grand_map.get_closes_tile(data.pos)
 	var obj = grand_map.get_object(tile.id)
-	var has_max = grand_map_mission_data.points.size() > 2
+	var has_max = grand_map_mission_data.points.size() >= 3
 	if is_instance_valid(obj) or has_max or tile.tile_type == 2:
 		return
 		
@@ -122,7 +125,7 @@ func _on_ui_on_add_base(data :MapObjectData):
 	# must get id from tile!!
 	var tile = grand_map.get_closes_tile(data.pos)
 	var obj = grand_map.get_object(tile.id)
-	var has_max = grand_map_mission_data.bases.size() > 1
+	var has_max = grand_map_mission_data.bases.size() >= 2
 	if is_instance_valid(obj) or has_max or tile.tile_type == 2:
 		return
 	
@@ -177,44 +180,23 @@ func _on_ui_on_toggle_nav(show):
 func _on_ui_on_zoom_tile(pos):
 	show_selection(Vector3.ZERO, false)
 	var tile = grand_map.get_closes_tile(pos)
-	print("zoom in to : %s" % tile.to_dictionary())
-	
-func _save_mission() -> String:
-	var map_name = grand_map_manifest_data.map_name
-	var file_path = "user://%s/%s.mission" % [Global.map_dir,map_name]
-	Global.save_map(file_path, grand_map_mission_data.to_dictionary(), false)
-	yield(Global.save_load_map,"save_done")
-	return file_path
-	
-func _save_map() -> String:
-	var map_name = grand_map_manifest_data.map_name
-	var file_path = "user://%s/%s.map" % [Global.map_dir, map_name]
-	Global.save_map(file_path, grand_map_data.to_dictionary(), false)
-	yield(Global.save_load_map,"save_done")
-	return file_path
-	
-func _save_manifest( map_file:String, mission_file:String):
-	var map_name = grand_map_manifest_data.map_name
-	var file_path = "user://%s/%s.manifest" % [Global.map_dir, map_name]
-	
-	var img_path = yield(Global.save_ss(map_name), "completed")
-	grand_map_manifest_data.map_image_file_path = img_path
-	
-	grand_map_manifest_data.map_file_path = map_file
-	grand_map_manifest_data.mission_file_path = mission_file
-	grand_map_manifest_data.battle_map_files = {} # todo
-	
-	SaveLoad.save(file_path, grand_map_manifest_data.to_dictionary(), false)
+	if Global.battle_map_datas.has(tile.id):
+		print("zoom in to : %s" % Global.battle_map_datas[tile.id].tile_ids)
 	
 func _on_ui_on_save():
 	ui.set_visible(false)
 	movable_camera_custom.translation = Vector3(0, 5, 2)
 	yield(get_tree().create_timer(0.6),"timeout")
 	
-	var map_file = yield(_save_map(),"completed")
-	var mission_file = yield(_save_mission(),"completed")
-	yield(_save_manifest(map_file, mission_file),"completed")
-	
+	var disable_sectors :Array = []
+	for key in Global.battle_map_datas.keys():
+		if not grand_map.is_nav_enable(key):
+			disable_sectors.append(key)
+			
+	for i in disable_sectors:
+		Global.battle_map_datas.erase(i)
+		
+	yield(Global.save_edited_map(),"completed")
 	on_back_pressed()
 
 

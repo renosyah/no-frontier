@@ -70,12 +70,8 @@ anchor_bottom = 1.0
 [node name="TextureRect" type="TextureRect" parent="transision_screen"]
 margin_right = 600.0
 margin_bottom = 1024.0
+expand = true
 stretch_mode = 7
-
-[node name="ColorRect" type="ColorRect" parent="transision_screen"]
-margin_right = 600.0
-margin_bottom = 1024.0
-color = Color( 0, 0, 0, 0.482353 )
 
 [node name="Control" type="Control" parent="transision_screen"]
 margin_right = 600.0

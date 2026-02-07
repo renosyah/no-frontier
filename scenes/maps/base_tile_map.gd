@@ -49,6 +49,13 @@ func get_object(id :Vector2) -> BaseTileObject:
 		
 	return _spawned_objects[id] # TileObject
 	
+func is_nav_enable(id :Vector2) -> bool:
+	if not _tile_map_data.tile_ids.has(id):
+		return false
+		
+	var nav_id :int = _tile_map_data.tile_ids[id]
+	return not _navigation.is_point_disabled(nav_id)
+	
 func update_spawned_object(data :MapObjectData):
 	remove_spawned_object(data.id, false)
 	
@@ -135,9 +142,9 @@ func get_closes_tile_instance(from :Vector3) -> BaseTile:
 	for i in tiles:
 		if i == current:
 			continue
-			
-		var dist_1 = current.translation.distance_squared_to(from)
-		var dist_2 = i.translation.distance_squared_to(from)
+
+		var dist_1 = current.global_position.distance_squared_to(from)
+		var dist_2 = i.global_position.translation.distance_squared_to(from)
 		if dist_2 < dist_1:
 			current = i
 			
@@ -149,12 +156,13 @@ func get_closes_tile(from :Vector3) -> TileMapData:
 		return null
 		
 	var current :TileMapData = tiles[0]
+	var modifier :Vector3 = global_position
 	for i in tiles:
 		if i == current:
 			continue
 			
-		var dist_1 = current.pos.distance_squared_to(from)
-		var dist_2 = i.pos.distance_squared_to(from)
+		var dist_1 = (current.pos + modifier).distance_squared_to(from)
+		var dist_2 = (i.pos + modifier).distance_squared_to(from)
 		if dist_2 < dist_1:
 			current = i
 			

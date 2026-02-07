@@ -24,6 +24,11 @@ onready var camera_limit_bound = Vector3(3, 0, 2)
 ##########################################  map editor  ############################################
 # for load and save maps
 const map_dir = "map"
+const grand_map_size = 2
+const battle_map_size = 3
+const req_base_count = 2
+const req_point_count = 1
+
 var save_load_map :SaveLoadImproved
 
 onready var grand_map_manifest_datas :Array = [] # [ GrandMapFileManifest ]
@@ -45,6 +50,28 @@ func save_map(filename :String, data, use_prefix = true):
 	var path = "%s/%s" %[map_dir, filename] if use_prefix else filename
 	save_load_map.save_data_async(path, data, use_prefix)
 	
+func set_active_map(manif :GrandMapFileManifest):
+	grand_map_manifest_data = manif
+	
+	save_load_map.load_data_async(manif.map_file_path,false)
+	var results = yield(save_load_map,"load_done")
+	grand_map_data = TileMapFileData.new()
+	grand_map_data.from_dictionary(results[1])
+	
+	save_load_map.load_data_async(manif.mission_file_path,false)
+	results = yield(save_load_map,"load_done")
+	grand_map_mission_data = GrandMapFileMission.new()
+	grand_map_mission_data.from_dictionary(results[1])
+	
+	battle_map_datas = {}
+	for key in manif.battle_map_files.keys():
+		var value = manif.battle_map_files[key]
+		save_load_map.load_data_async(value,false)
+		results = yield(save_load_map,"load_done")
+		var battle_data = TileMapFileData.new()
+		battle_data.from_dictionary(results[1])
+		battle_map_datas[key] = battle_data
+	
 # for editor
 onready var grand_map_manifest_data :GrandMapFileManifest
 onready var grand_map_data :TileMapFileData
@@ -54,7 +81,7 @@ onready var battle_map_datas :Dictionary = {} # [ Vector2:TileMapFileData ]
 func empty_map_data():
 	grand_map_manifest_data = GrandMapFileManifest.new()
 	grand_map_manifest_data.map_name = RandomNameGenerator.generate_name()
-	grand_map_manifest_data.map_size = 2
+	grand_map_manifest_data.map_size = grand_map_size
 	
 	grand_map_data = TileMapUtils.generate_basic_tile_map(grand_map_manifest_data.map_size)
 	
@@ -63,6 +90,49 @@ func empty_map_data():
 	grand_map_mission_data.points = []
 	
 	battle_map_datas = {}
+	for keys in grand_map_data.tile_ids.keys():
+		battle_map_datas[keys] = TileMapUtils.generate_basic_tile_map(battle_map_size, false)
+		
+		
+func save_edited_map():
+	var map_file = yield(_save_map(),"completed")
+	var mission_file = yield(_save_mission(),"completed")
+	yield(_save_manifest(map_file, mission_file),"completed")
+	
+func _save_mission() -> String:
+	var map_name = grand_map_manifest_data.map_name
+	var file_path = "user://%s/%s.mission" % [map_dir,map_name]
+	save_map(file_path, grand_map_mission_data.to_dictionary(), false)
+	yield(save_load_map,"save_done")
+	return file_path
+	
+func _save_map() -> String:
+	var map_name = grand_map_manifest_data.map_name
+	var file_path = "user://%s/%s.map" % [map_dir, map_name]
+	save_map(file_path, grand_map_data.to_dictionary(), false)
+	yield(save_load_map,"save_done")
+	return file_path
+	
+func _save_manifest(map_file:String, mission_file:String):
+	var map_name = grand_map_manifest_data.map_name
+	var file_path = "user://%s/%s.manifest" % [map_dir, map_name]
+	
+	var img_path = yield(save_ss(map_name), "completed")
+	grand_map_manifest_data.map_image_file_path = img_path
+	
+	grand_map_manifest_data.map_file_path = map_file
+	grand_map_manifest_data.mission_file_path = mission_file
+	grand_map_manifest_data.battle_map_files = {}
+	
+	for key in battle_map_datas.keys():
+		var i :TileMapFileData =  battle_map_datas[key]
+		var battle_file_path = "user://%s/%s_%s_%s.map" % [map_dir, map_name, key.x, key.y]
+		save_map(battle_file_path, grand_map_data.to_dictionary(), false)
+		yield(save_load_map,"save_done")
+		grand_map_manifest_data.battle_map_files[key] = battle_file_path
+		
+	# uses save load, cause data not that many LOL
+	SaveLoad.save(file_path, grand_map_manifest_data.to_dictionary(), false)
 	
 ##########################################  util  ############################################
 func save_ss(map_name:String) -> String:

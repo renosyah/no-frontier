@@ -3,6 +3,8 @@ extends Control
 func _ready():
 	get_tree().set_quit_on_go_back(false)
 	get_tree().set_auto_accept_quit(false)
+	
+	Global.hide_transition()
 
 func _notification(what):
 	match what:
@@ -19,7 +21,6 @@ func on_back_pressed():
 	
 func _on_editor_pressed():
 	Global.change_scene("res://menu/editor_menu/editor_menu.tscn")
-
 
 func _on_play_pressed():
 	Global.change_scene("res://menu/lobby/lobby.tscn", true, 2)

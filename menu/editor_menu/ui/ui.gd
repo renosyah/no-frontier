@@ -43,20 +43,7 @@ func _on_back_pressed():
 	on_back_pressed()
 	
 func _loaded_maps_edit_button_pressed(manif :GrandMapFileManifest):
-	Global.grand_map_manifest_data = manif
-	
-	Global.save_load_map.load_data_async(manif.map_file_path,false)
-	var results = yield(Global.save_load_map,"load_done")
-	Global.grand_map_data = TileMapFileData.new()
-	Global.grand_map_data.from_dictionary(results[1])
-	
-	Global.save_load_map.load_data_async(manif.mission_file_path,false)
-	results = yield(Global.save_load_map,"load_done")
-	Global.grand_map_mission_data = GrandMapFileMission.new()
-	Global.grand_map_mission_data.from_dictionary(results[1])
-	
-	Global.battle_map_datas = {} # todo
-
+	yield(Global.set_active_map(manif),"completed")
 	Global.change_scene("res://menu/editor/editor.tscn", true, 0)
 	
 func _on_add_map_button_pressed():
