@@ -3,28 +3,24 @@ extends Control
 const edit_map_button = preload("res://menu/editor_menu/button/edit_map_button.tscn")
 
 onready var grid_container = $CanvasLayer/Control/VBoxContainer/ScrollContainer/GridContainer
-onready var loaded_maps = []
 onready var loaded_maps_edit_buttons = []
 
 func _ready():
 	get_tree().set_quit_on_go_back(false)
 	get_tree().set_auto_accept_quit(false)
 	
-	_load_maps()
+	Global.load_maps()
 	_show_maps()
-	
-func _load_maps():
-	# load maps from disk
-	# added it to array of loaded_maps
-	pass
 	
 func _show_maps():
 	for i in loaded_maps_edit_buttons:
 		grid_container.remove_child(i)
 	loaded_maps_edit_buttons.clear()
 	
-	for i in loaded_maps:
+	for i in Global.grand_map_manifest_datas:
+		var data :GrandMapFileManifest = i
 		var loaded_maps_edit_button = edit_map_button.instance()
+		loaded_maps_edit_button.data = data
 		loaded_maps_edit_button.connect("pressed", self, "_loaded_maps_edit_button_pressed", [i])
 		grid_container.add_child(loaded_maps_edit_button)
 		grid_container.move_child(loaded_maps_edit_button, 0)
@@ -46,8 +42,21 @@ func on_back_pressed():
 func _on_back_pressed():
 	on_back_pressed()
 	
-func _loaded_maps_edit_button_pressed(map):
-	# set map to EditorGlobal map data
+func _loaded_maps_edit_button_pressed(manif :GrandMapFileManifest):
+	Global.grand_map_manifest_data = manif
+	
+	Global.save_load_map.load_data_async(manif.map_file_path,false)
+	var results = yield(Global.save_load_map,"load_done")
+	Global.grand_map_data = TileMapFileData.new()
+	Global.grand_map_data.from_dictionary(results[1])
+	
+	Global.save_load_map.load_data_async(manif.mission_file_path,false)
+	results = yield(Global.save_load_map,"load_done")
+	Global.grand_map_mission_data = GrandMapFileMission.new()
+	Global.grand_map_mission_data.from_dictionary(results[1])
+	
+	Global.battle_map_datas = {} # todo
+
 	get_tree().change_scene("res://menu/editor/editor.tscn")
 	
 func _on_add_map_button_pressed():

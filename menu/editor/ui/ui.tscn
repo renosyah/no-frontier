@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://addons/SafeArea/SafeArea.gd" type="Script" id=1]
 [ext_resource path="res://menu/editor/ui/ui.gd" type="Script" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://assets/user_interface/icons/back_fill.png" type="Texture" id=21]
 [ext_resource path="res://assets/user_interface/icons/editor_menu_icon/save.png" type="Texture" id=22]
 [ext_resource path="res://assets/user_interface/icons/editor_menu_card/forest_tile_card_2.png" type="Texture" id=23]
+[ext_resource path="res://assets/user_interface/fonts/montserrat_eb_32.tres" type="DynamicFont" id=24]
 
 [node name="ui" type="Control"]
 anchor_right = 1.0
@@ -227,11 +228,31 @@ margin_bottom = 258.0
 button_image = ExtResource( 8 )
 manual_toggle = true
 
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/faction_base"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -40.0
+custom_fonts/font = ExtResource( 24 )
+text = "2"
+align = 1
+valign = 1
+
 [node name="capture_point" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2" instance=ExtResource( 4 )]
 margin_top = 262.0
 margin_bottom = 362.0
 button_image = ExtResource( 10 )
 manual_toggle = true
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/capture_point"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -40.0
+custom_fonts/font = ExtResource( 24 )
+text = "2"
+align = 1
+valign = 1
 
 [node name="show_nav" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2" instance=ExtResource( 4 )]
 margin_top = 366.0

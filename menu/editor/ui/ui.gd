@@ -15,7 +15,7 @@ const forests = [
 	preload("res://scenes/tile_objects/grand/forest_1.tscn"),
 	preload("res://scenes/tile_objects/grand/forest_2.tscn")
 ]
-
+onready var control = $CanvasLayer/Control
 onready var movable_camera_ui = $CanvasLayer/movable_camera_ui
 onready var tile_options = [$CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/ground_tile, $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/water_tile, $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer/object_forest]
 onready var map_options = [$CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/faction_base, $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/capture_point]
@@ -26,6 +26,8 @@ onready var show_nav = $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxCon
 onready var remove_object_card = $CanvasLayer/Control/VBoxContainer/HBoxContainer3/object_remove_card
 onready var zoom_in_card = $CanvasLayer/Control/VBoxContainer/HBoxContainer3/zoom_in_card
 onready var map_name = $CanvasLayer/Control/VBoxContainer/HBoxContainer/ColorRect/map_name
+onready var base_qty = $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/faction_base/Label
+onready var point_qty = $CanvasLayer/Control/VBoxContainer/HBoxContainer2/VBoxContainer2/capture_point/Label2
 
 func _ready():
 	var card_idx = 0
@@ -43,6 +45,11 @@ func _ready():
 		card.connect("on_cancel", self, "_on_card_grab_cancel")
 	
 	hide_cards()
+	
+func set_visible(value):
+	.set_visible(value)
+	
+	control.visible = value
 	
 func on_card_release(card :DragableCard, at :Vector2):
 	if card == remove_object_card:
