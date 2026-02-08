@@ -60,6 +60,7 @@ static func generate_basic_tile_map(size :int, is_grand_map :bool = true) -> Til
 	
 	return map_data
 	
+	
 # return all adjacent tiles
 # with range and type of direction
 # only returned tile that registered in Astar navigation

@@ -82,6 +82,7 @@ func empty_map_data():
 	grand_map_manifest_data = GrandMapFileManifest.new()
 	grand_map_manifest_data.map_name = RandomNameGenerator.generate_name()
 	grand_map_manifest_data.map_size = grand_map_size
+	grand_map_manifest_data.battle_map_names = {}
 	
 	grand_map_data = TileMapUtils.generate_basic_tile_map(grand_map_manifest_data.map_size)
 	
@@ -89,10 +90,12 @@ func empty_map_data():
 	grand_map_mission_data.bases = []
 	grand_map_mission_data.points = []
 	
+	var alphabetics = Utils.military_alphabetic()
 	battle_map_datas = {}
-	for keys in grand_map_data.tile_ids.keys():
-		battle_map_datas[keys] = TileMapUtils.generate_basic_tile_map(battle_map_size, false)
-		
+	for key in grand_map_data.tile_ids.keys():
+		battle_map_datas[key] = TileMapUtils.generate_basic_tile_map(battle_map_size, false)
+		var sector_name = "%s %s-%s" % [alphabetics[randi() % alphabetics.size()], abs(key.x), abs(key.y)]
+		grand_map_manifest_data.battle_map_names[key] = sector_name
 		
 func save_edited_map():
 	var map_file = yield(_save_map(),"completed")

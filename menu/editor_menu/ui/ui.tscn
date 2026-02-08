@@ -84,9 +84,10 @@ size_flags_vertical = 3
 scroll_horizontal_enabled = false
 
 [node name="GridContainer" type="GridContainer" parent="CanvasLayer/Control/VBoxContainer/ScrollContainer"]
-margin_right = 145.0
-margin_bottom = 145.0
-columns = 4
+margin_right = 600.0
+margin_bottom = 200.0
+size_flags_horizontal = 3
+columns = 3
 
 [node name="add_map_button" parent="CanvasLayer/Control/VBoxContainer/ScrollContainer/GridContainer" instance=ExtResource( 8 )]
 

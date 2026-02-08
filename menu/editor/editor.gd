@@ -181,7 +181,7 @@ func _on_ui_on_zoom_tile(pos):
 	show_selection(Vector3.ZERO, false)
 	var tile = grand_map.get_closes_tile(pos)
 	if Global.battle_map_datas.has(tile.id):
-		print("zoom in to : %s" % Global.battle_map_datas[tile.id].tile_ids)
+		print("zoom in to : %s" % grand_map_manifest_data.battle_map_names[tile.id])
 	
 func _on_ui_on_save():
 	ui.set_visible(false)

@@ -6,6 +6,7 @@ var map_size :int
 var map_image_file_path :String
 var map_file_path :String
 var mission_file_path :String
+var battle_map_names :Dictionary # { Vector2 : String }
 var battle_map_files :Dictionary # { Vector2 : String }
 
 func from_dictionary(_data : Dictionary):
@@ -14,6 +15,7 @@ func from_dictionary(_data : Dictionary):
 	map_image_file_path = _data["map_image_file_path"]
 	map_file_path = _data["map_file_path"]
 	mission_file_path = _data["mission_file_path"]
+	battle_map_names = _data["battle_map_names"].duplicate()
 	battle_map_files = _data["battle_map_files"].duplicate()
 
 func to_dictionary() -> Dictionary :
@@ -23,5 +25,6 @@ func to_dictionary() -> Dictionary :
 	_data["map_image_file_path"] = map_image_file_path
 	_data["map_file_path"] = map_file_path
 	_data["mission_file_path"] = mission_file_path
+	_data["battle_map_names"] = battle_map_names.duplicate()
 	_data["battle_map_files"] = battle_map_files.duplicate()
 	return _data

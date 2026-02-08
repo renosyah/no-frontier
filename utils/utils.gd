@@ -1,6 +1,37 @@
 extends Node
 class_name Utils
 
+static func military_alphabetic() -> Array:
+	return [
+		"Alpha",   # A
+		"Bravo",   # B
+		"Charlie", # C
+		"Delta",   # D
+		"Echo",    # E
+		"Foxtrot", # F
+		"Golf",    # G
+		"Hotel",   # H
+		"India",   # I
+		"Juliett", # J (double 't' is correct)
+		"Kilo",    # K
+		"Lima",    # L
+		"Mike",    # M
+		"November",# N
+		"Oscar",   # O
+		"Papa",    # P
+		"Quebec",  # Q
+		"Romeo",   # R
+		"Sierra",  # S
+		"Tango",   # T
+		"Uniform", # U
+		"Victor",  # V
+		"Whiskey", # W
+		"X-ray",   # X
+		"Yankee",  # Y
+		"Zulu"    # Z
+	]
+
+
 static func get_all_resources(path: String, extensions := ["tres", "res", "tscn", "scn", "obj"]) -> PoolStringArray:
 	var files := PoolStringArray()
 	var dir := Directory.new()

@@ -21,7 +21,7 @@ func _show_maps():
 		var data :GrandMapFileManifest = i
 		var loaded_maps_edit_button = edit_map_button.instance()
 		loaded_maps_edit_button.data = data
-		loaded_maps_edit_button.connect("pressed", self, "_loaded_maps_edit_button_pressed", [i])
+		loaded_maps_edit_button.connect("pressed", self, "_loaded_maps_edit_button_pressed")
 		grid_container.add_child(loaded_maps_edit_button)
 		grid_container.move_child(loaded_maps_edit_button, 0)
 		loaded_maps_edit_buttons.append(loaded_maps_edit_button)
