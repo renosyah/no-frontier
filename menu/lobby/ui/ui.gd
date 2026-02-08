@@ -17,7 +17,7 @@ func _notification(what):
 			return
 			
 func on_back_pressed():
-	Global.change_scene("res://menu/main/main.tscn")
+	Global.change_scene("res://menu/main/main.tscn", true, 1)
 
 func _on_back_pressed():
 	on_back_pressed()
